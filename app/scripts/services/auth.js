@@ -1,8 +1,12 @@
-	
-angular.module('BarcampApp')
-	.factory('AuthService', function ($http, $q, $location) {
-		return {Users: ()=>{return $http.get('https://nashvillebarcamp.firebaseio.com/.json')
-		}}
-	})
-;
+'use strict';
 
+app.factory('AuthService', function ($http) {
+
+	const getAllUsers = () => {
+		return $http.get('https://nashvillebarcamp.firebaseio.com/.json')
+		.then(data => data.data.Users);
+	}
+
+	return { getAllUsers };
+
+});

@@ -1,12 +1,11 @@
-
 <div class="input-group">
-		<span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>			<input type="text" name="badgeId" id="badgeId" class="form-control" data-ng-model="badgeId" required autofocus/>
+		<span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+		<input type="text" name="badgeId" class="form-control" ng-model="badgeId" required autofocus/>
 
-	</div>	
-		<span ng-show="error" class="help-block">{{ error }}</span>
+		<span ng-show="error" class="help-block">{{error}}</span>
 </div>
+<button type="submit" class="btn btn-primary btn-login" ng-click="login(badgeId)">Submit</button>
 
-<button type="submit" class="btn btn-primary btn-login" ng-click="login(badgeId)" data-ng-disabled="voterDetails.$invalid">Submit</button>
 
 <h2 id="greeting">Welcome to BarCamp Nashville 2016!</h2>
 

@@ -1,4 +1,5 @@
-angular.module('BarcampApp')
-	.controller('SessionListingCtrl', function($scope, $rootScope, $http) {
-})
-;
+'use strict';
+
+app.controller('SessionListingCtrl', function($scope) {
+
+});
