@@ -1,57 +1,50 @@
-'use strict';
+angular.module('BarcampApp')
+	.controller('SessionListingCtrl', function($scope, $rootScope, Sessions, $http) {
+		var user = $rootScope.user;
+		$scope.sessions = Sessions;
+		$scope.polling = $rootScope.pollingSync;
 
-app.controller('SessionListingCtrl', function($scope, SessionListing) {
-	
-	//jquery to control session tabs
-	$('#myTabs a').click(function (e) {
-    e.preventDefault()
-    $(this).tab('show')
-  })
+		$rootScope.pollingSync.$watch(function() {
+			$scope.polling = $rootScope.pollingSync;
+		});
 
-	// TODO will make better i promise 
-  $scope.polling = {
-  	open: true,
-  	sessions: 'morning'
-  }
-
-  $scope.user = '1FY13NK8'
-	$scope.voteArray = []
-
-  $scope.vote = (index) => {
-  	//Need to make sure user can't vote for a session twice
-  	//Need error handling for more than 3 votes
-  	if( $scope.voteArray.length < 3) {
-  		$scope.voteArray.push(index)
-  		console.log("voteArray: ", $scope.voteArray)
-  	} 
-  }
-
-  //returns all sessions from sessions.js in services
-	SessionListing.getAllSessions().
-	then(sessionList => {
-			$scope.sessions = sessionList
-			console.log($scope.sessions)
-	})
-
-	//takes barcampUsername from ng-submit in sessionlist.html
-	$scope.getFavorites = (userName) => {
-		$scope.favoritesArray = []
-
-		//returns specific user's favorites from list coming from sessions.js
-		SessionListing.getFavoritesList(userName)
-		.then(favoritesList => {
-			$scope.favoriteSessions = favoritesList
-			console.log("list from drupal:", $scope.favoriteSessions)
-
-			//nested loop compares favorites from drupal site with all sessions
-			for (let i = 0; i < $scope.sessions.length; i++) {
-				for (let j = 0; j < $scope.favoriteSessions.length; j++) {
-					if($scope.sessions[i].Nid.toString() === $scope.favoriteSessions[j].session.Nid) {
-						$scope.favoritesArray.push($scope.sessions[i])
-					}
+		$rootScope.user.ref.once('value', function(snapshot) {
+			if (snapshot.hasChild('sessions')) {
+				var s = snapshot.val().sessions;
+				for (var i = s.length - 1; i >= 0; i--) {
+					$scope.sessions[s[i]].updateUserVoteStatus();
 				}
 			}
-			console.log("list after comparison:", $scope.favoritesArray)
-		})
-	}
-});
+		});
+
+		$scope.userFavorites = [];
+
+		$rootScope.user.ref.once('value', function(snapshot) {
+			var data = snapshot.val();
+			if (data.favoriteIds.length) {
+				Sessions.forEach(function(session) {
+					if (data.favoriteIds.indexOf(session.nid) > -1) {
+						$scope.userFavorites.push(session);
+					}
+				})
+			}
+		});
+
+		$scope.getFavorites = function() {
+			$scope.submitting = true;
+			$http.get('/favorites/' + $rootScope.user.id + '/' + $scope.barcampUsername).then(function(res) {
+				var favorites = res.data.favoriteIds;
+				Sessions.forEach(function(session) {
+					if (favorites.indexOf(session.nid) > -1) {
+						$scope.userFavorites.push(session);
+					}
+				});
+				$scope.invalidUsername = false;
+			}, function (errorResponse) {
+				$scope.invalidUsername = true;
+			}).finally(function() {
+				delete $scope.submitting;
+			});
+		}
+})
+;
