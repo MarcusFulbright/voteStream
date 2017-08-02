@@ -26,6 +26,31 @@
 
 	</div>
 
+<!-- 	<h3>Complete Table</h3>
+	<table class="table">
+		<thread>
+			<tr>
+				<td>Rank</td>
+				<td>Votes</td>
+				<td>Title</td>
+				<td>Speaker</td>
+				<td>Availability</td>
+			</tr>
+		</thread>
+
+		<tbody>
+			<tr data-ng-class="" data-ng-repeat="s in sessions | orderBy:sortByType:reverseSort | filter:{availability: sessions.availability}">
+				<td>{{s.Rank}}</td>
+				<td>{{s.total_votes}}</td>
+				<td>{{s.Title}}</td>
+				<td>{{s['First Name']}} {{s['Last Name']}}</td>
+				<td>{{s.Availability}}</td>
+			</tr>
+		</tbody>
+	</table> -->
+
+	<hr>
+
 	<table class="table">
 		<thead>
 			<tr>
@@ -72,6 +97,25 @@
 				<td>{{s.Title}}</td>
 				<td>{{s['First Name']}} {{s['Last Name']}}</td>
 				<td>{{s.Availability}}</td>
+
+				<!--ng options for -->
+				
+				<td>
+				<select 
+					name="repeatTimes" id="repeatTimes" ng-model="timeValues" 
+					ng-change="timeValue(timeValues)">
+					<option ng-repeat="time in times" value="{{time}}">{{time}}</option>
+				</select>
+				</td>
+
+				<td>
+				<select name="repeatSelect" id="repeatSelect" ng-model="repeatSelect">
+					<option ng-repeat="room in rooms" value="{{time}}">{{room}}</option>
+				</select>
+				</td>
+
+
+
 			</tr>
 		</tbody>
 	</table>

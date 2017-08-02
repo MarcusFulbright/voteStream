@@ -31,8 +31,10 @@ const app = angular.module('BarcampApp', ['ngRoute'])
 			}, 
 			SessionList: function(SessionListing){
 				return SessionListing.getAllSessions().then(session => session);
-			} 
-
+			},
+			RoomList: function(SessionListing){
+				return SessionListing.getAllRooms().then(room => room);
+			}
 		}
 	})
 	.when('/fullschedule', {

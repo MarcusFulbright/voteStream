@@ -12,5 +12,10 @@ app.factory('SessionListing', function ($http) {
 		.then(data => data.data["favorited sessions"])
 	}
 	
-	return {getAllSessions, getFavoritesList}
+	const getAllRooms = () => {
+		return $http.get(`https://nashvillebarcamp.firebaseio.com/Rooms.json`)
+		.then(data => data.data)
+	}
+
+	return {getAllSessions, getFavoritesList, getAllRooms}
 });
