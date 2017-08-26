@@ -23,9 +23,16 @@ const app = angular.module('BarcampApp', ['ngRoute'])
 		controller : 'AdminCtrl',
 		adminAccess: true,
 		resolve: {
-			Sessions: function (SessionListing) {
-				return SessionListing();
-			}
+			Sessions: function (User, $location, SessionListing) {
+				return User.getUser().catch(err => {
+					$location.path('/admin');
+
+				});
+			}, 
+			SessionList: function(SessionListing){
+				return SessionListing.getAllSessions().then(session => session);
+			} 
+
 		}
 	})
 	.when('/fullschedule', {

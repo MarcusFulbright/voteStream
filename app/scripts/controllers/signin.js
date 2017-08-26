@@ -17,12 +17,18 @@ app.controller('SigninCtrl', function ($scope, $location, AuthService, User) {
 		Object.keys($scope.badges).forEach((badge)=>{
 
 			//if badgeId from signin.html matches a badge, route to sessions
-			if ($scope.badgeId.toUpperCase() === badge){
+			if ($scope.badgeId.toUpperCase() === badge && $scope.badges[badge].admin === false){
+		
 				User.setUser(badge);
 				$location.path('/sessions');
 
 			//else return error variable for signin.html
-			} else {
+			} else if ($scope.badgeId.toUpperCase() === badge && $scope.badges[badge].admin === true){
+				User.setUser(badge)
+				//todo
+				//User.setAdmin(badge);
+				$location.path('/admin');
+			} else{
 				$scope.error = 'Invalid badge ID.';
 			};
 		});
