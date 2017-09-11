@@ -1,37 +1,43 @@
-<div class="row">
-	<div class="col-xs-12 col-sm-offset-2 col-sm-12">
-	
-		<div class="form-group">
-		  <h3><label for="badgeId">Log In</label></h3>
-		</div>
-
-		<div class="col-xs-8">
-			<!-- text input models to badgeId, which gets sent to ng-click on the button below--> 
-			<input type="text" name="badgeId" class="form-control" ng-model="badgeId" placeholder="Badge ID" ng-keydown="$event.keyCode === 13 && login(badgeId)" required autofocus/>	
-		</div>
-
-		<!-- calls login function from signin.js with badgeId -->
-		<button type="submit" class="btn btn-primary btn-login col-sm-2" ng-click="login(badgeId); booleanCheck($index)">Submit</button>
+<div class="row top-buffer">
+	<div class="col-xs-12 col-sm-8 col-sm-offset-2 ">
+		<div class="input-group">
+			<input 
+				type="text" 
+				name="badgeId" 
+				class="form-control"
+				placeholder="Badge ID" 
+				ng-model="badgeId"
+				ng-keydown="$event.keyCode === 13 && login(badgeId)"
+				required
+				autofocus >
 			
-		<div class="col-xs-12">
-			<!-- error variable comes from signin.js -->
+			<span class="input-group-btn">
+			<button class="btn btn-primary btn-login" type="submit" ng-click="login(badgeId); booleanCheck($index)">
+				Submit!
+			</button>
+			</span>
+		</div><!-- /input-group -->
+			
+		<div> 
 			<h4><label ng-if="error" class="label label-danger">{{error}}</label></h4>
+			<!-- error variable comes from signin.js -->
 		</div>
-
 	</div>
+</div><!--end row-->
 
-	
-	<div class="col-sm-12">
-		<h2 class="text-center">Welcome to BarCamp Nashville 2017!</h2>
+<div class="row">
+	<div class="col-sm-12 text-center">
+		<h2 class="top-buffer">Welcome to BarCamp Nashville 2017!</h2>
 
-	 	<p>We're excited to have you. Please log in with the Badge ID found on your name tag to get started. See the folks at the check-in desk if you are missing a Badge ID.</p>
+	 	<p class="lead">We're excited to have you.</p>
+	 	<p>Please log in with the Badge ID found on your name tag to get started.
+	 	See the folks at the check-in desk if you are missing a Badge ID.</p>
 
-		<dl class="text-center">
+		<dl>
 			<dt>Morning Voting</dt>
 			<dd>8 a.m. - 9:15 a.m.</dd>
 			<dt>Afternoon Voting</dt>
 			<dd>noon - 12:45 p.m.</dd>
 		</dl>
 	</div>
-
-</div>
+</div><!--end row-->

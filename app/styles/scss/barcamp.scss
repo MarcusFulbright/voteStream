@@ -12,6 +12,7 @@ $secondary-color: #feb336;
 $secondary-color-lighter: lighten( $secondary-color, 10%);
 $secondary-color-darker: darken( $secondary-color, 10%);
 $background: #ffffff;
+$headings: 'Oswald', sans-serif;
 
 
 /*
@@ -30,6 +31,42 @@ $background: #ffffff;
 	ANIMATIONS
 	MEDIA QUERIES
 */
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+
+body {
+	margin-bottom: 150px;
+}
+
+.nav-tabs {
+    border: none;
+    border-radius: 0;
+}
+
+.nav-tabs > li, .nav-pills > li {
+    float:none;
+    display:inline-block;
+    *display:inline; /* ie7 fix */
+     zoom:1; /* hasLayout ie7 trigger */
+}
+
+.nav-tabs, .nav-pills {
+    text-align:center;
+}
+
+.nav-tabs > li > a {
+    background: $secondary-color !important;
+    color: #fff;
+    border: none;
+    border-radius: 0;
+    margin: 20px 10px 10px 10px;	
+}
+
+
 
 /********* HEADER *********/
 .header {
@@ -53,11 +90,26 @@ $background: #ffffff;
 	}
 }
 
+h1, h2, h3, h4, h5, h6 {
+	
+}
+
+h1, h2 {
+	font-family: $headings;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	color: $secondary-color;
+}
+
+.top-buffer { 
+	margin-top: 20px; 
+}
+
 
 /********* CONTAINER *********/
 .container .sessions,
 .container .results {
-	padding-top: 55px;
+	padding-top: 30px;
 	padding-left: 0px;
 	padding-right: 0px;
 }
@@ -68,10 +120,13 @@ $background: #ffffff;
   margin: 20px 0;
 }
 
-footer {
-  padding: 20px 0;
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 150px;
 }
-
 
 /********* DEFAULT *********/
 blockquote {

@@ -25,6 +25,8 @@
     <div  class="tab-pane active container sessions" ng-if="tab === 'morning'">
         <!-- ///////////////////////////////////////////////TODO: change has voted to edit mode///////////////// -->
         <!-- ///////////TODO: remove get-remaing-votes, session listing will handle via watcher///////////////// -->
+        <h2>Morning Sessions</h2>
+
         <session
             ng-repeat="session in sessions track by $index"
             ng-show="session.Availability.includes('Morning')"
@@ -44,6 +46,11 @@
     <div  class="tab-pane container sessions" ng-if="tab === 'afternoon'">
         <!-- ///////////////////////////////////////////////TODO: change has voted to edit mode///////////////// -->
         <!-- ///////////TODO: remove get-remaing-votes, session listing will handle via watcher///////////////// -->
+        <h2>Afternoon Sessions</h2>
+
+        <!-- TODO: Add login for voting open -->
+        <p class="lead">Open for Voting!</p>
+
         <session
             ng-repeat="session in sessions track by $index"
             ng-show="session.Availability.includes('Afternoon')"
