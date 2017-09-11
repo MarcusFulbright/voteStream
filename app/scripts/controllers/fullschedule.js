@@ -8,6 +8,9 @@ app.controller('FullScheduleCtrl', function ($scope) {
   $scope.morningRooms = [];
   $scope.afternoonRooms = [];
 
+    console.log('$scope.afternoonRooms', $scope.afternoonRooms);     
+    console.log('$scope.morningRooms', $scope.morningRooms);  
+
     $scope.sortScheduleByTime = (schedule, session) => {
         let scheduleObj = schedule[session].rooms;
         let numberOfRooms = Object.keys(scheduleObj).length;
@@ -24,6 +27,10 @@ app.controller('FullScheduleCtrl', function ($scope) {
                 }
             }
         }
+    
+    console.log('$scope.afternoonRooms', $scope.afternoonRooms);     
+    console.log('$scope.morningRooms', $scope.morningRooms);     
+
     }
 
     $scope.setFilterString = (filterBy) => {
