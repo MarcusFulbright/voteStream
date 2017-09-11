@@ -25,7 +25,7 @@ const SessionCtrl = function($scope, $element, $attrs) {
   this.isDisabled = function() {
     if (this.votes.length === this.maxVotes && !this.arrayHasVote()) {
       return true;
-    } else if (this.hasVoted) {
+    } else if (!this.hasVoted) {
       return true;
     } else {
       return false;

@@ -23,6 +23,8 @@
 <div>
   <!--morning voting-->
     <div  class="tab-pane active container sessions" ng-if="tab === 'morning'">
+        <!-- ///////////////////////////////////////////////TODO: change has voted to edit mode///////////////// -->
+        <!-- ///////////TODO: remove get-remaing-votes, session listing will handle via watcher///////////////// -->
         <session 
             ng-repeat="session in sessions track by $index"
             ng-show="session.Availability.includes('Morning')"
@@ -30,7 +32,7 @@
             index="$index" 
             votes="voteArray" 
             add-vote="addVote(index)" 
-            has-voted="hasUserVoted" 
+            has-voted="editMode" 
             polling="polling"
             remove-vote="removeVote(index)" 
             session-type="'morning'"
@@ -40,6 +42,8 @@
 
   <!--afternoon voting-->
     <div  class="tab-pane container sessions" ng-if="tab === 'afternoon'">
+        <!-- ///////////////////////////////////////////////TODO: change has voted to edit mode///////////////// -->
+        <!-- ///////////TODO: remove get-remaing-votes, session listing will handle via watcher///////////////// -->        
         <session 
             ng-repeat="session in sessions track by $index"
             ng-show="session.Availability.includes('Afternoon')"
@@ -47,7 +51,7 @@
             index="$index" 
             votes="voteArray" 
             add-vote="addVote(index)" 
-            has-voted="hasUserVoted" 
+            has-voted="editMode" 
             polling="polling"
             remove-vote="removeVote(index)" 
             session-type="'afternoon'"
@@ -61,20 +65,20 @@
             data-target=".bs-example-modal-sm" 
             type="button" 
             ng-click="voteSubmit()" 
-            ng-if="!hasUserVoted" 
-            ng-disabled="!polling.open">Submit</button>
+            ng-if="editMode"
+            ng-disabled="!polling.open || !voteArray.length">Submit</button>
 
         <button 
             class="btn btn-danger" 
             type="button" 
             ng-click="resetVote()" 
-            ng-if="!hasUserVoted" 
-            ng-disabled="!polling.open">Reset</button>
+            ng-if="editMode" 
+            ng-disabled="!polling.open || !hasUserVoted">Reset</button>
 
         <button 
             class="btn btn-warning" 
-            type="button" ng-click="editMode()" 
-            ng-if="hasUserVoted" 
+            type="button" ng-click="setEdit()" 
+            ng-if="!editMode" 
             ng-disabled="!polling.open">Edit Votes</button>
     </div>
 </div>
