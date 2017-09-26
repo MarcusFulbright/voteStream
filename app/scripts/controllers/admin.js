@@ -1,7 +1,6 @@
 'use strict';
 
-app.controller('AdminCtrl', function ($scope, $filter, SessionList, Polling, Constants, $http) {
-
+app.controller('AdminCtrl', function ($scope, $filter, SessionList, Polling, Constants, Rooms, TimeSlots, $http) {
 
     // This JS will execute on page load
     firebase.database().ref('/Sessions').on('value', (sessions) => {
@@ -19,9 +18,8 @@ app.controller('AdminCtrl', function ($scope, $filter, SessionList, Polling, Con
 
   $scope.unSortedSessionsArray = [];
   $scope.sessions = [];
-  // TODO these need to be retreived from FB and loaded using the resolve pattern
-  $scope.rooms = ["Room A", "Room Z", "Tardis", "Bunker"];
-  $scope.times = ["09:30", "10:30", "11:30", "1:30", "2:30", "3:30" ];
+  $scope.rooms = Rooms; // Resolved: ["Kitchen", "Attic", "Basement", "Bathroom"]
+  $scope.times = TimeSlots; // Resolved: {afternoon: Array(4), morning: Array(4)} 
   $scope.availability = Polling;
   $scope.sortByType = "rank";
   $scope.reverseSort = false;

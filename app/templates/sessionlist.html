@@ -48,8 +48,10 @@
         <!-- ///////////TODO: remove get-remaing-votes, session listing will handle via watcher///////////////// -->
         <h2>Afternoon Sessions</h2>
 
+        <!-- ng-if="polling.open && tab === polling.sessions" --> <!--also add to sessions votes left -->
         <!-- TODO: Add login for voting open -->
         <p class="lead">Open for Voting!</p>
+        <p class="lead">Voting has Closed.</p>
 
         <session
             ng-repeat="session in sessions track by $index"

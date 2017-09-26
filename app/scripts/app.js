@@ -29,10 +29,15 @@ const app = angular.module('BarcampApp', ['ngRoute'])
 
 				});
 			}, 
-			SessionList: function(SessionListing){
+			SessionList: function(SessionListing) {
 				return SessionListing.getAllSessions().then(session => session);
-			} 
-
+			},
+			Rooms: function(AdminService) {
+				return AdminService.getRoomNames().then(room => room);
+			},
+			TimeSlots: function(AdminService) {
+				return AdminService.getTimeSlots().then(time => time);
+			}
 		}
 	})
 	.when('/fullschedule', {

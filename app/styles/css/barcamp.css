@@ -321,4 +321,7 @@ input[type="color"]:focus,
     overflow: hidden;
     text-overflow: ellipsis; } }
 
+h1 {
+  color: red; }
+
 /*# sourceMappingURL=maps/barcamp.css.map */
