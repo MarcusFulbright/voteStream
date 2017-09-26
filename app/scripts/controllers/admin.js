@@ -22,12 +22,11 @@ app.controller('AdminCtrl', function($scope, $filter, SessionList, Polling, Cons
   //to add rank for the session (ie, 1, 2, 3, must first create a new unsorted array then sort the array by the total votes)
 
    $scope.setTime = (e, session) => {
-    session.Times = e;
+    session.Time = e;
   }
 
   $scope.setRoom = (e, session) => {
     session.Room = e;
-    console.log($scope.sessions)
   }
 
   $scope.addRankingByVotes = (sessions) =>{
@@ -43,6 +42,7 @@ app.controller('AdminCtrl', function($scope, $filter, SessionList, Polling, Cons
 
   $scope.prepareSchedule = (timeOfDay) => {
     let preparedSchedule = [];
+    let conflictCheck = [];
     if(!timeOfDay){
       alert('Select Morning or Afternoon from the sessions dropdown');
     }
@@ -53,8 +53,27 @@ app.controller('AdminCtrl', function($scope, $filter, SessionList, Polling, Cons
       } else {
         preparedSchedule.push(session);
       }
-    })
+    });
+    // console.log(preparedSchedule)
+    // for (var i = 0; i < preparedSchedule.length; i++){
+    //   conflictCheck.push([preparedSchedule[i].Time, preparedSchedule[i].Room])
+    // }
+    for (var i = 0; i < preparedSchedule.length; i++){
+      var len = preparedSchedule.length;
+      var current = preparedSchedule[i];
+      var previous = preparedSchedule[(i+len-1)%len];
+      var next = preparedSchedule[(i+1)%len];
+      if(current.Time === next.Time && current.Room === next.Room){
+        console.log('stop!')
+        alert('There are scheduling conflicts with' + current.Title + ' and ' + next.Title)
+      }
+    }
+
     updateScheduleToFirebase(timeOfDay, preparedSchedule)
+  }
+
+  $scope.checkConflicts = (array) => {
+
   }
 
   const updateScheduleToFirebase = (timeOfDay, schedule) =>{
@@ -65,6 +84,7 @@ app.controller('AdminCtrl', function($scope, $filter, SessionList, Polling, Cons
     })
     .catch(console.error);
   }
+
 
 })//end
 
