@@ -27,6 +27,10 @@
         <!-- ///////////TODO: remove get-remaing-votes, session listing will handle via watcher///////////////// -->
         <h2>Morning Sessions</h2>
 
+        <!-- Show if polling is opened or closed -->        
+        <div ng-show="polling.open"><p class="lead">Morning Voting Is Open!</p></div>
+        <div ng-show="!polling.open"><p class="lead">Morning Voting Has Closed!</p></div>
+
         <session
             ng-repeat="session in sessions track by $index"
             ng-show="session.Availability.includes('Morning')"
@@ -47,11 +51,10 @@
         <!-- ///////////////////////////////////////////////TODO: change has voted to edit mode///////////////// -->
         <!-- ///////////TODO: remove get-remaing-votes, session listing will handle via watcher///////////////// -->
         <h2>Afternoon Sessions</h2>
-
-        <!-- ng-if="polling.open && tab === polling.sessions" --> <!--also add to sessions votes left -->
-        <!-- TODO: Add login for voting open -->
-        <p class="lead">Open for Voting!</p>
-        <p class="lead">Voting has Closed.</p>
+        
+        <!-- Show if polling is opened or closed -->        
+        <div ng-show="polling.open"><p class="lead">Afternoon Voting Is Open!</p></div>
+        <div ng-show="!polling.open"><p class="lead">Afternoon Voting Has Closed!</p></div>
 
         <session
             ng-repeat="session in sessions track by $index"
