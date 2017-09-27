@@ -1,17 +1,36 @@
-angular.module('BarcampApp')
-    .controller('SigninCtrl', function ($scope, AuthService, $location) {
-        $scope.$watch('badgeId', function () {
-            $scope.error = null;
-        });
+'use strict';
 
-        $scope.login = function (id) {
-            $scope.thinking = true;
-            $scope.error = null;
-            AuthService.login(id.toUpperCase()).then(function () {},
-            function (response) {
-                $scope.thinking = false;
-                $scope.error = response.status == 401 ? "I have no memory of this ID" : "I'm afraid I can't do that, Chuck.";
-            });
-        };
-    })
-;
+app.controller('SigninCtrl', function ($scope, $location, AuthService, User) {
+
+	// get all badges
+	AuthService.getAllUsers().then((userList)=>{
+		$scope.badges = userList;
+	});
+
+	//takes id from badgeId model in signin.html
+	$scope.login = (id) => {
+
+		// if no id is entered, return error variable for signin.html
+		if (!id) { return $scope.error = 'Please enter a badge ID.'};
+
+		let userBadge = id.toUpperCase();
+		let badgeFound = false;
+		
+		// loop through all badges for the userBadge
+		for (let badge in $scope.badges) {
+			if (userBadge === badge) {
+				badgeFound = true;
+				break;
+			} 
+		}
+		// check if badge has been found
+		if (badgeFound === true) {
+			// set the user and redirect
+			User.setUser(userBadge); 
+			$location.path('/sessions'); 
+		} else {
+			// display error in signin.html
+			$scope.error = 'Invalid badge ID.';
+		};
+	};
+});

@@ -1,0 +1,181 @@
+{
+	"morning_sessions": {
+	
+	"rooms": [
+		{
+			"name": "room-1",
+			"times": [
+				{
+					"time": "0830",
+					"session": {
+						"title": "Rant",
+						"speaker": "Marcus",
+						"url": "{{ Link to view session abstract }}"
+					}
+				},
+				{
+					"time": "0900",
+					"session": {
+						"title": "No-Sql-Design",
+						"speaker": "Abby",
+						"url": "{{ Link to view session abstract }}"
+					}
+				}
+			]
+		},
+		{
+			"name": "room-2",
+			"times": [
+				{
+					"time": "0930",
+					"session": {
+						"title": "Why I Love Bar Camp",
+						"speaker": "Dom",
+						"url": "{{ Link to view session abstract }}"
+					}
+				},
+				{
+					"time": "1000",
+					"session": {
+						"title": "Why SQL is better",
+						"speaker": "some effing guy",
+						"url": "{{ Link to view session abstract }}"
+					}
+				}
+			]
+		},
+		{
+			"name": "room-3",
+			"times": [
+				{
+					"time": "0930",
+					"session": {
+						"title": "BarCamp Rocks",
+						"speaker": "David",
+						"url": "{{ Link to view session abstract }}"
+					}
+				},
+				{
+					"time": "1030",
+					"session": {
+						"title": "BarCamp BarCamp BarCamp",
+						"speaker": "Daniel",
+						"url": "{{ Link to view session abstract }}"
+					}
+				}
+			]
+		},
+		{
+			"name": "room-4",
+			"times": [
+				{
+					"time": "0830",
+					"session": {
+						"title": "BarCamp, yo",
+						"speaker": "Jamey",
+						"url": "{{ Link to view session abstract }}"
+					}
+				},
+				{
+					"time": "0900",
+					"session": {
+						"title": "BarCamppppp",
+						"speaker": "Person",
+						"url": "{{ Link to view session abstract }}"
+					}
+				}
+			]
+		}
+	]
+	},
+
+	"afternoon_sessions": {	
+
+		"rooms": [
+			{
+				"name": "room-1",
+				"times": [
+					{
+						"time": "1300",
+						"session": {
+							"title": "Rant",
+							"speaker": "Marcus",
+							"url": "{{ Link to view session abstract }}"
+						}
+					},
+					{
+						"time": "1430",
+						"session": {
+							"title": "No-Sql-Design",
+							"speaker": "Abby",
+							"url": "{{ Link to view session abstract }}"
+						}
+					}
+				]
+			},
+			{
+				"name": "room-2",
+				"times": [
+					{
+						"time": "1400",
+						"session": {
+							"title": "Why I Love Bar Camp",
+							"speaker": "Dom",
+							"url": "{{ Link to view session abstract }}"
+						}
+					},
+					{
+						"time": "1530",
+						"session": {
+							"title": "Why SQL is better",
+							"speaker": "some effing guy",
+							"url": "{{ Link to view session abstract }}"
+						}
+					}
+				]
+			},
+			{
+				"name": "room-3",
+				"times": [
+					{
+						"time": "1400",
+						"session": {
+							"title": "BarCamp Rocks",
+							"speaker": "David",
+							"url": "{{ Link to view session abstract }}"
+						}
+					},
+					{
+						"time": "1530",
+						"session": {
+							"title": "BarCamp BarCamp BarCamp",
+							"speaker": "Daniel",
+							"url": "{{ Link to view session abstract }}"
+						}
+					}
+				]
+			},
+			{
+				"name": "room-4",
+				"times": [
+					{
+						"time": "1300",
+						"session": {
+							"title": "BarCamp, yo",
+							"speaker": "Jamey",
+							"url": "{{ Link to view session abstract }}"
+						}
+					},
+					{
+						"time": "1530",
+						"session": {
+							"title": "BarCamppppp",
+							"speaker": "Person",
+							"url": "{{ Link to view session abstract }}"
+						}
+					}
+				]
+			}
+		]
+	}
+}

@@ -3,3 +3,4 @@ node_modules
 .sass-cache
 .idea
 /release/
+npm-debug.log

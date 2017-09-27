@@ -1,38 +1,29 @@
-angular.module('BarcampApp')
-	.factory('User', function ($firebase) {
-		var User = function (user) {
-			this.ref = new Firebase('https://nashvillebarcamp.firebaseio.com/Users/' + user.id);
-			this.sync = $firebase(this.ref).$asObject();
-			this.sessions = user.sessions || null;
-			this.id = user.id;
-			this.admin = user.admin;
-			this.voting = false;
-		};
+'use strict';
 
-		User.prototype.updateSessions = function (id, cb) {
-			this.voting = true;
+app.factory('User', function($http) {
 
-			if (!this.sync.sessions) {
-				this.sync.sessions = [];
+	let user;
+
+	// getter
+	const getUser = () => {
+		return new Promise(function(resolve, reject) {
+			if (user === null || user === undefined) {
+				reject();
 			}
+			resolve(user);
+		});
+	}
 
-			var idx = this.sync.sessions.indexOf(id);
+	// setter
+	const setUser = (badgeId) => {
+		user = badgeId;
+	}
 
-			if (idx > -1) {
-				this.sync.sessions.splice(idx, 1);
-			} else if (this.sync.sessions.length >= 4) {
-				return this.voting = false;
-			} else {
-				this.sync.sessions.push(id);
-			}
+	//logout
+	const userLogout = () => {
+		user = '';
+	}
 
-			this.sync.$save().then(function () {
-				if (cb) {
-					cb();
-				}
-			});
-		}
+	return {getUser, setUser, userLogout};
 
-		return User;
-	})
-;
+});

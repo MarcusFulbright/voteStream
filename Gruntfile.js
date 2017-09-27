@@ -94,12 +94,19 @@ module.exports = function (grunt) {
 			}
 		},
 
-		uglify: {
-			dist: {
-				src: '<%= config.tmp %>/scripts/app.js',
-				dest: '<%= config.dist %>/scripts/app.min.js'
-			}
-		},
+		// uglifyEs: {
+		// 	dist: {
+		// 		src: '<%= config.tmp %>/scripts/app.js',
+		// 		dest: '<%= config.dist %>/scripts/app.min.js'
+		// 	}
+		// },
+
+		// uglify: {
+		// 	dist: {
+		// 		src: '<%= config.tmp %>/scripts/app.js',
+		// 		dest: '<%= config.dist %>/scripts/app.min.js'
+		// 	}
+		// },
 
 		useminPrepare: {
 			html: 'index.html'
@@ -135,7 +142,7 @@ module.exports = function (grunt) {
 		'useminPrepare',
 		'concat',
 		'ngAnnotate',
-		'uglify',
+		// 'uglifyEs',
 		'usemin',
 		'clean:tmp'
 	]);

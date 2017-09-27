@@ -1,0 +1,36 @@
+<!-- Title, Category, Checkbox -->
+<div id="static">
+<div class="row"">
+	<div class="sessionTitle col-xs-9">
+		<h4>{{$ctrl.session.Title}}</h4>
+		<p><i>with:</i> {{$ctrl.session["First Name"]}} {{$ctrl.session["Last Name"]}}</p>
+	</div>
+
+	<div class="col-xs-3 ">
+		<div class="checkbox checkbox-primary pull-right">
+			<input type="checkbox" 
+			ng-disabled="$ctrl.isDisabled()"
+			ng-if="$ctrl.isVotingOpen()"
+			ng-click="$ctrl.check()" 
+			ng-model="$ctrl.isChecked"
+			id="checkbox-{{$ctrl.index}}"/>
+			<label ng-if="$ctrl.isVotingOpen()" for="checkbox-{{$ctrl.index}}"></label>
+		 </div>	 
+	</div>
+
+	<div class="col-xs-3 flex-row">
+		<span class="label label-default pull-right category">{{$ctrl.session["Session Category"]}}</span>
+	</div>
+</div> <!-- end row -->
+</div>
+
+
+<!-- Session Description -->
+<div class="row">
+	<div class="sessionDescription col-xs-12 col-sm-12 col-md-12" ng-click="showText = !showText">
+		<p ng-class="{ collapsed: !showText }">{{$ctrl.session.Body}}</p>
+		<div class="toggle-text" ng-hide="showText"><em>show more</em></div>
+		<div class="toggle-text" ng-show="showText"><em>show less</em></div>
+	</div>
+	<hr/>
+</div> <!--end row -->

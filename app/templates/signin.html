@@ -1,25 +1,37 @@
-<form name="voterDetails" data-role="form" data-ng-submit="login(badgeId)">
-
-	<div class="form-group">
-		<label for="badgeId">Badge ID</label>
-		<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-			<input type="text" name="badgeId" id="badgeId" class="form-control" data-ng-model="badgeId" required autofocus/>
-
+<div class="row">
+	<div class="col-xs-12 col-sm-offset-2 col-sm-12">
+	
+		<div class="form-group">
+		  <h3><label for="badgeId">Log In</label></h3>
 		</div>
-		<span ng-show="voterDetails.badgeId.$error.required &amp;&amp; voterDetails.$dirty" class="help-block">Please enter your badge ID</span>
-		<span ng-show="error" class="help-block">{{ error }}</span>
+
+		<div class="col-xs-8">
+			<!-- text input models to badgeId, which gets sent to ng-click on the button below--> 
+			<input type="text" name="badgeId" class="form-control" ng-model="badgeId" placeholder="Badge ID" ng-keydown="$event.keyCode === 13 && login(badgeId)" required autofocus/>	
+		</div>
+
+		<!-- calls login function from signin.js with badgeId -->
+		<button type="submit" class="btn btn-primary btn-login col-sm-2" ng-click="login(badgeId); booleanCheck($index)">Submit</button>
+			
+		<div class="col-xs-12">
+			<!-- error variable comes from signin.js -->
+			<h4><label ng-if="error" class="label label-danger">{{error}}</label></h4>
+		</div>
+
 	</div>
 
-	<button type="submit" class="btn btn-primary btn-login" data-ng-disabled="voterDetails.$invalid">Submit</button>
-</form>
-<h2 id="greeting">Welcome to BarCamp Nashville 2016!</h2>
+	
+	<div class="col-sm-12">
+		<h2 class="text-center">Welcome to BarCamp Nashville 2017!</h2>
 
-<p>We're excited to have you. Please log in with the Badge ID found on your name tag to get started. See the folks at the check-in desk if you are missing a Badge ID.</p>
+	 	<p>We're excited to have you. Please log in with the Badge ID found on your name tag to get started. See the folks at the check-in desk if you are missing a Badge ID.</p>
 
-<dl class="text-center">
-	<dt>Morning Voting</dt>
-	<dd>8 a.m. - 9:15 a.m.</dd>
-	<dt>Afternoon Voting</dt>
-	<dd>noon - 12:45 p.m.</dd>
-</dl>
+		<dl class="text-center">
+			<dt>Morning Voting</dt>
+			<dd>8 a.m. - 9:15 a.m.</dd>
+			<dt>Afternoon Voting</dt>
+			<dd>noon - 12:45 p.m.</dd>
+		</dl>
+	</div>
+
+</div>

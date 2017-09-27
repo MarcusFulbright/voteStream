@@ -1,162 +1,98 @@
 <div class="container">
-  <div class="header">
-    <div class="row text-center">
-      <button class="btn btn-primary pull-left" data-ng-click="logout()">Log Out!</button>
-      <p class="label label-warning votesremaning">{{4 - user.sync.sessions.length}} votes left</p>
-      <button class="btn btn-primary pull-right" data-ng-if="!user.admin">
-        <a href="{{scheduleUrl}}" target="_blank" class="header-link">Schedule</a>
-      </button>
-      <button class="btn btn-primary pull-right" data-ng-if="user.admin">
-        <a href="#/admin" class="admin-link">Admin</a>
-      </button>
-    </div>
-  </div>
-</div>
+	<div class="header">
+		<div class="row text-center">
+			<button class="btn btn-primary pull-left logout" ng-click="logout()">Log Out!</button>
 
+			<a href="{{scheduleUrl}}" target="_blank" class="header-link">Schedule</a>
+			<span> | Votes Remaining: {{remainingVotes}}</span>
+
+			<button class="btn btn-primary pull-right" ng-if="user.admin">
+			  <a href="#/admin" class="admin-link">Admin</a>
+			</button>
+		</div>
+	</div>
+</div>
 <div class="container sessions" id="myTabs">
   <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#amVote" aria-controls="home" role="tab" data-toggle="tab">Morning</a></li>
-    <li role="presentation"><a href="#pmVote" aria-controls="profile" role="tab" data-toggle="tab">Afternoon</a></li>
-    <li role="presentation"><a href="#favs" aria-controls="profile" role="tab" data-toggle="tab">Favorites</a></li>
-  </ul>
+    <ul class="nav nav-tabs" >
+        <li ng-class="{active: tab === 'morning'}"><a ng-click="showTab('morning')">Morning</a></li>
+        <li ng-if="polling.sessions === 'afternoon' || polling.showAfternoonTab" ng-class="{active: tab === 'afternoon'}"><a ng-click="showTab('afternoon')"  >Afternoon</a></li>
+    </ul>
 </div>
 
-
-<div class="tab-content">
+<div>
   <!--morning voting-->
-  <div role="tabpanel" class="tab-pane active container sessions" id="amVote">
-    <ul class="list-unstyled">
-      <li data-ng-repeat="session in sessions | orderBy: 'title' | morning">
-
-        <div class="row">
-          <div class="sessionTitle col-xs-10 col-sm-9 col-md-10">
-            <h4>{{session.title}}</h4>
-          </div>
-          <div class="voting-buttons col-xs-2 col-sm-3 col-md-2">
-            <button type="button" ng-show="polling.open && polling.sessions==='morning'" class="pull-right btn btn-primary" data-ng-class="{voted: session.uservoted}" data-ng-click="session.vote(user)">
-              <i class="fa" data-ng-class="{'fa-square': !session.uservoted, 'fa-thumbs-up': session.uservoted}"></i>
-            </button>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="sessionSpeaker col-xs-5 col-sm-5 col-md-5">
-            <p><i>with:</i> {{session.speaker.firstName}} {{session.speaker.lastName}}</p>
-          </div>
-          <div class="category col-xs-7 col-sm-7 col-md-7">
-            <span class="label label-default pull-right" data-ng-repeat="category in session.categories">{{category}}</span>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="sessionDescription col-xs-12 col-sm-12 col-md-12" data-ng-click="showText = !showText">
-            <p data-ng-class="{ collapsed: !showText }">{{session.summary}}</p>
-            <div class="toggle-text" data-ng-hide="showText"><i>show more</i></div>
-            <div class="toggle-text" data-ng-show="showText"><i>show less</i></div>
-          </div>
-          <hr/>
-        </div>
-
-      </li>
-    </ul>
-  </div>
+    <div  class="tab-pane active container sessions" ng-if="tab === 'morning'">
+        <!-- ///////////////////////////////////////////////TODO: change has voted to edit mode///////////////// -->
+        <!-- ///////////TODO: remove get-remaing-votes, session listing will handle via watcher///////////////// -->
+        <session
+            ng-repeat="session in sessions track by $index"
+            ng-show="session.Availability.includes('Morning')"
+            session="session"
+            index="$index"
+            votes="voteArray"
+            add-vote="addVote(index)"
+            has-voted="editMode"
+            polling="polling"
+            remove-vote="removeVote(index)"
+            session-type="'morning'"
+            get-remaining-votes="getRemainingVotes()">
+        </session>
+    </div>
 
   <!--afternoon voting-->
-  <div role="tabpanel" class="tab-pane container sessions" id="pmVote">
-    <ul class="list-unstyled">
-      <li data-ng-repeat="session in sessions | orderBy: 'title' | afternoon">
-
-        <div class="row">
-          <div class="sessionTitle col-xs-10 col-sm-9 col-md-10">
-            <h4>{{session.title}}</h4>
-          </div>
-          <div class="voting-buttons col-xs-2 col-sm-3 col-md-2">
-            <button type="button" ng-show="polling.open && polling.sessions==='afternoon'" class="pull-right btn btn-primary" data-ng-class="{voted: session.uservoted}" data-ng-click="session.vote(user)">
-              <i class="fa" data-ng-class="{'fa-square': !session.uservoted, 'fa-thumbs-up': session.uservoted}"></i>
-            </button>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="sessionSpeaker col-xs-5 col-sm-5 col-md-5">
-            <p><i>with:</i> {{session.speaker.firstName}} {{session.speaker.lastName}}</p>
-          </div>
-          <div class="category col-xs-7 col-sm-7 col-md-7">
-            <span class="label label-default pull-right" data-ng-repeat="category in session.categories">{{category}}</span>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="sessionDescription col-xs-12 col-sm-12 col-md-12" data-ng-click="showText = !showText">
-            <p data-ng-class="{ collapsed: !showText }">{{session.summary}}</p>
-            <div class="toggle-text" data-ng-hide="showText"><i>show more</i></div>
-            <div class="toggle-text" data-ng-show="showText"><i>show less</i></div>
-          </div>
-          <hr/>
-        </div>
-
-      </li>
-    </ul>
-  </div>
-
-  <!--favorites-->
-  <div role="tabpanel" class="tab-pane container sessions" id="favs">
-    <form ng-show="!userFavorites.length" class="col-xs-10 col-sm-9 col-md-10" data-ng-submit="getFavorites()">
-      <div>
-        <p ng-show="invalidUsername" class="label label-warning">Invalid Username!</p>
-      </div>
-      <input type="text" placeholder="BarCamp Username" data-ng-model="barcampUsername">
-      <button ng-show="!userFavorites.length" class="btn btn-primary" type="submit">
-        <span data-ng-if="!submitting">Submit</span>
-        <span data-ng-if="submitting"><i class="fa fa-spinner fa-spin"></i></span>
-	    </button>
-      <p>Enter your Barcamp website username to load this screen with sessions you've marked as a favorite.</p>
-    </form>
-    <div ng-show="userFavorites.length">
-      <p>Vote for your favorites for the current polling session!</p>
-      <hr />
+    <div  class="tab-pane container sessions" ng-if="tab === 'afternoon'">
+        <!-- ///////////////////////////////////////////////TODO: change has voted to edit mode///////////////// -->
+        <!-- ///////////TODO: remove get-remaing-votes, session listing will handle via watcher///////////////// -->
+        <session
+            ng-repeat="session in sessions track by $index"
+            ng-show="session.Availability.includes('Afternoon')"
+            session="session"
+            index="$index"
+            votes="voteArray"
+            add-vote="addVote(index)"
+            has-voted="editMode"
+            polling="polling"
+            remove-vote="removeVote(index)"
+            session-type="'afternoon'"
+            get-remaining-votes="getRemainingVotes()">
+        </session>
     </div>
-    <ul class="list-unstyled">
-		<li data-ng-repeat="session in userFavorites | orderBy: 'title'">
 
-			<div class="row">
-				<div class="sessionTitle col-xs-10 col-sm-9 col-md-10">
-					<h4>{{session.title}}</h4>
-				</div>
-				<div class="voting-buttons col-xs-2 col-sm-3 col-md-2">
-					<button type="button" ng-show="polling.open && session.availability.toLowerCase().indexOf(polling.sessions) > -1" class="pull-right btn btn-primary" data-ng-class="{voted: session.uservoted}" data-ng-click="session.vote(user)">
-						<i class="fa" data-ng-class="{'fa-square': !session.uservoted, 'fa-thumbs-up': session.uservoted}"></i>
-					</button>
-				</div>
-			</div>
+	<!-- Buttons will only show if polling is open and session who's tab is selected is open for voting -->
+    <div class="row voting-button-container" ng-if="polling.open && tab === polling.sessions">
+		<button
+			class="btn btn-danger col-sm-2"
+			type="button"
+			ng-click="resetVote()"
+			ng-if="editMode"
+			ng-disabled="!polling.open || !hasUserVoted">Cancel</button>
 
-			<div class="row">
-				<div class="sessionSpeaker col-xs-5 col-sm-5 col-md-5">
-					<p><i>with:</i> {{session.speaker.firstName}} {{session.speaker.lastName}}</p>
-				</div>
-				<div class="category col-xs-7 col-sm-7 col-md-7">
-					<span class="label label-default pull-right" data-ng-repeat="category in session.categories">{{category}}</span>
-				</div>
-			</div>
+		<button
+            class="btn btn-success col-sm-2"
+            data-toggle="modal"
+            data-target=".bs-example-modal-sm"
+            type="button"
+            ng-click="voteSubmit()"
+            ng-if="editMode"
+            ng-disabled="!polling.open || !voteArray.length">Submit</button>
 
-			<div class="row">
-				<div class="sessionDescription col-xs-12 col-sm-12 col-md-12" data-ng-click="showText = !showText">
-					<p data-ng-class="{ collapsed: !showText }">{{session.summary}}</p>
-					<div class="toggle-text" data-ng-hide="showText"><i>show more</i></div>
-					<div class="toggle-text" data-ng-show="showText"><i>show less</i></div>
-				</div>
-				<hr/>
-			</div>
-
-		</li>
-    </ul>
-  </div>
-
+        <button
+            class="btn btn-warning col-sm-2"
+            type="button" ng-click="setEdit()"
+            ng-if="!editMode"
+            ng-disabled="!polling.open">Edit Votes</button>
+    </div>
 </div>
-<script>
-  $('#myTabs a').click(function (e) {
-    e.preventDefault()
-    $(this).tab('show')
-  })
-</script>
+
+<div class="modal fade bs-example-modal-sm" id="error-modal" tabindex="-1">
+    <div class="modal-dialog modal-sm" >
+        <div class="modal-content">
+            <h3 id="error-message" style="">{{errorMessage}}</h3>
+            <h5 ng-repeat="title in titlesArray">{{title}}</h5>
+            <div>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -2,11 +2,10 @@
 <html lang="en" data-ng-app="BarcampApp">
   <head>
 	<title>Vote</title>
+	<link rel="icon" href="images/favicon.ico" type="image/x-icon" />
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-
 	<link href="/styles/css/barcamp.css" rel="stylesheet" type="text/css">
-
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   </head>
 
@@ -21,50 +20,59 @@
 	<footer class="container">
 		<div class="row">
 			<div class="col-xs-6">
-				<img id="event-logo" class="logo pull-left" src="/images/event-logo.png">
+				<img id="event-logo" class="logo pull-left" src="/images/event-logo.png" alt="BarCamp Logo">
 			</div>
 			<div class="col-xs-6">
-				<img id="vendor-spotlight" class="logo pull-right" src="/images/firebase-logo.png">
+				<img id="vendor-spotlight" class="logo pull-right" src="/images/firebase-logo.png" alt="Firebase Logo">
 			</div>
 		</div>
 
 		<div class="row">
-			<div class="col-xs-12">
-				<p>Built by <a href="https://www.linkedin.com/in/blakemccool" target="_blank">Blake McCool</a>, <a href="https://www.linkedin.com/in/psunderhaus" target="_blank">Paul Sunderhaus</a> &amp; <a href="https://www.linkedin.com/in/edwinacevedo" target="_blank">Edwin Acevedo</a></p>
+			<div class="col-xs-12 credits">
+				<p>
+				Built by: 
+				<a href="https://www.linkedin.com/in/daniel-chapdelaine-595a09126/" target="_blank">Daniel Chapdelaine</a>, 
+				<a href="https://www.linkedin.com/in/davidcramb/" target="_blank">David Cramb</a>,
+				<a href="https://www.linkedin.com/in/abbyfleming/" target="_blank">Abby Fleming</a>,
+				<a href="https://www.linkedin.com/in/marcus-fulbright-28a3089/" target="_blank">Marcus Fulbright</a>, 
+				<a href="https://www.linkedin.com/in/jamey-mcauliffe/" target="_blank">Jamey McAuliffe</a>, &amp;
+				<a href="https://www.linkedin.com/in/dominic-serrano" target="_blank">Dominic Serrano</a>
+				</p>
 			</div>
 		</div>
 	</footer>
 
-	<!-- jQuery -->
-	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-
-	<!-- AngularJS -->
-	<script src="scripts/vendor/angular.min.js"></script>
-	<script src="scripts/vendor/angular-route.min.js"></script>
-
 
 	<!-- Firebase -->
-	<script src="https://cdn.firebase.com/js/client/1.1.2/firebase.js"></script>
+	<script src="vendor/firebase.js"></script>
 
-	<!-- AngularFire -->
-	<script src="https://cdn.firebase.com/libs/angularfire/0.8.0/angularfire.min.js"></script>
-	<script src="https://cdn.firebase.com/js/simple-login/1.6.4/firebase-simple-login.js"></script>
-	<script type="text/javascript" src="scripts/vendor/angular-webstorage.js"></script>
+	<!-- jQuery -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="vendor/bootstrap.min.js"></script>
+
+	<!-- AngularJS -->
+	<script src="vendor/angular.min.js"></script>
+	<script src="vendor/angular-route.min.js"></script>
 
 	<!-- build:js scripts/app.min.js-->
 	<script src="scripts/app.js"></script>
 	<script src="scripts/controllers/admin.js"></script>
 	<script src="scripts/controllers/session-listing.js"></script>
 	<script src="scripts/controllers/signin.js"></script>
+	<script src="scripts/controllers/fullschedule.js"></script>
+
+	<!--factories-->
 	<script src="scripts/services/sessions.js"></script>
+	<script src="scripts/services/admin.js"></script>
+	<script src="scripts/services/vote.js"></script>
 	<script src="scripts/services/auth.js"></script>
 	<script src="scripts/services/user.js"></script>
-	<script src="scripts/filters/afternoon.js"></script>
-	<script src="scripts/filters/morning.js"></script>
+	<script src="scripts/services/polling.js"></script>
+	<script src="scripts/services/fullSchedule.js"></script>
+	<script src="scripts/services/constants.js"></script>
+
+    <!-- components -->
+    <script src="scripts/components/session.js"></script>
 	<!-- endbuild-->
-
-	<script src="scripts/vendor/bootstrap.min.js"></script>
-
-
   </body>
 </html>
