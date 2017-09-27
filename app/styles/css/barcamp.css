@@ -1,19 +1,4 @@
-/*
-	GLOSSARY:
-	HEADER
-	CONTAINER
-	FOOTER
-	DEFAULT (Default Broswer Values)
-	ADMIN (Page)
-	SESSION (Page)
-	ANGULAR / VALIDATION
-	BUTTONS & LABELS
-	CHECKBOXES
-	INPUTS
-	POPUP MODALS
-	ANIMATIONS
-	MEDIA QUERIES
-*/
+/* DEFAULT */
 html {
   position: relative;
   min-height: 100%; }
@@ -21,29 +6,24 @@ html {
 body {
   margin-bottom: 150px; }
 
-.nav-tabs {
-  border: none;
-  border-radius: 0; }
+h1, h2 {
+  font-family: "Oswald", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #feb336; }
 
-.nav-tabs > li, .nav-pills > li {
-  float: none;
-  display: inline-block;
-  *display: inline;
-  /* ie7 fix */
-  zoom: 1;
-  /* hasLayout ie7 trigger */ }
+.container .sessions,
+.container .results {
+  padding-top: 30px;
+  padding-left: 0px;
+  padding-right: 0px; }
 
-.nav-tabs, .nav-pills {
-  text-align: center; }
+blockquote {
+  font-size: 8pt;
+  padding: 3;
+  margin: 0; }
 
-.nav-tabs > li > a {
-  background: #feb336 !important;
-  color: #fff;
-  border: none;
-  border-radius: 0;
-  margin: 20px 10px 10px 10px; }
-
-/********* HEADER *********/
+/* HEADER */
 .header {
   position: fixed;
   left: 0;
@@ -68,23 +48,33 @@ body {
   .header #vote-counter {
     width: 40%; }
 
-h1, h2 {
-  font-family: "Oswald", sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #feb336; }
-
 .top-buffer {
   margin-top: 20px; }
 
-/********* CONTAINER *********/
-.container .sessions,
-.container .results {
-  padding-top: 30px;
-  padding-left: 0px;
-  padding-right: 0px; }
+/* NAVIGATION */
+.nav-tabs {
+  border: none;
+  border-radius: 0; }
 
-/********* FOOTER *********/
+.nav-tabs > li, .nav-pills > li {
+  float: none;
+  display: inline-block;
+  *display: inline;
+  /* ie7 fix */
+  zoom: 1;
+  /* hasLayout ie7 trigger */ }
+
+.nav-tabs, .nav-pills {
+  text-align: center; }
+
+.nav-tabs > li > a {
+  background: #feb336 !important;
+  color: #fff;
+  border: none;
+  border-radius: 0;
+  margin: 20px 10px 10px 10px; }
+
+/* FOOTER */
 .credits {
   margin: 20px 0; }
 
@@ -95,62 +85,57 @@ h1, h2 {
   /* Set the fixed height of the footer here */
   height: 150px; }
 
-/********* DEFAULT *********/
-blockquote {
-  font-size: 8pt;
-  padding: 3;
-  margin: 0; }
+/* ANIMATION */
+.animate-switch.ng-animate {
+  transition: all cubit-bezier(0.25, 0.45, 0.94) 0.5s;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; }
 
-/********* ADMIN *********/
-.admin-container {
-  margin-top: 70px; }
+.animate-switch.ng-leave-active, animate-switch.ng-enter {
+  top: 50px; }
 
-.admin-link, .admin-link:hover,
-.header-link, .header-link:hover {
-  color: #fff;
-  text-decoration: none; }
+.animate-switch.ng-leave, .animate-switch.ng-enter-active {
+  top: 0; }
 
-/********* SESSION *********/
-.gridStyle {
-  border: 2px solid #d4d4d4;
-  width: 100%;
-  height: 500px; }
+/* BUTTONS & LABELS */
+.logout {
+  margin-left: 20px; }
 
-.sessionDescription {
-  word-wrap: break-word;
-  line-height: 1.2em;
-  cursor: pointer; }
+.btn:focus {
+  outline: none; }
 
-.collapsed {
-  display: block;
-  display: -webkit-box;
-  max-width: 100%;
-  height: 29px;
-  margin: 0 auto;
-  font-size: 14px;
-  line-height: 1;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis; }
+.btn-primary {
+  background-color: #932318;
+  border-color: #671911; }
+  .btn-primary:hover, .btn-primary:disabled, .btn-primary:focus, .btn-primary:active {
+    background-color: #bf2d1f;
+    border-color: #932318; }
 
-.voting-button-container {
-  display: flex;
-  justify-content: space-around; }
+.btn-warning {
+  background-color: #feb336; }
+  .btn-warning:hover {
+    background-color: #fec669;
+    border-color: #feb336; }
 
-/********* ANGULAR / VALIDATION *********/
-.ng-invalid.ng-dirty {
-  color: #b94a48;
-  border-color: #b94a48;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); }
-  .ng-invalid.ng-dirty:focus {
-    border-color: #953b39;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392; }
+.btn.voted {
+  background-color: #feb336;
+  border-color: #fea003; }
 
-.ngRow:hover {
-  background-color: #ddedf0; }
+.category .label {
+  margin: 0px 2px;
+  margin-bottom: 2px; }
 
-/********* CHECKBOXES *********/
+.label-success {
+  margin-right: 5px;
+  margin-top: 4px; }
+
+.label-warning {
+  background-color: #feb336; }
+
+/* CHECKBOXES */
 .category {
   margin: 10px 0; }
 
@@ -215,42 +200,7 @@ blockquote {
 .checkbox-primary input[type="checkbox"]:checked + label::after {
   color: #fff; }
 
-/********* BUTTONS & LABELS *********/
-.logout {
-  margin-left: 20px; }
-
-.btn:focus {
-  outline: none; }
-
-.btn-primary {
-  background-color: #932318;
-  border-color: #671911; }
-  .btn-primary:hover, .btn-primary:disabled, .btn-primary:focus, .btn-primary:active {
-    background-color: #bf2d1f;
-    border-color: #932318; }
-
-.btn-warning {
-  background-color: #feb336; }
-  .btn-warning:hover {
-    background-color: #fec669;
-    border-color: #feb336; }
-
-.btn.voted {
-  background-color: #feb336;
-  border-color: #fea003; }
-
-.category .label {
-  margin: 0px 2px;
-  margin-bottom: 2px; }
-
-.label-success {
-  margin-right: 5px;
-  margin-top: 4px; }
-
-.label-warning {
-  background-color: #feb336; }
-
-/********* INPUTS *********/
+/* INPUTS */
 textarea:focus,
 input[type="text"]:focus,
 input[type="password"]:focus,
@@ -271,11 +221,7 @@ input[type="color"]:focus,
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(254, 179, 54, 0.5);
   outline: 0 none; }
 
-.come-back-message {
-  margin-top: 50px;
-  margin-bottom: 50px; }
-
-/********** POPUP MODALS *********/
+/* MODALS */
 #error-modal .modal-content {
   font-size: 1.5em;
   margin-top: 33%;
@@ -287,22 +233,18 @@ input[type="color"]:focus,
 #error-modal .btn {
   margin: 5%; }
 
-/********* ANIMATIONS *********/
-.animate-switch.ng-animate {
-  transition: all cubit-bezier(0.25, 0.45, 0.94) 0.5s;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0; }
+/* VALIDATION */
+.ng-invalid.ng-dirty {
+  color: #b94a48;
+  border-color: #b94a48;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); }
+  .ng-invalid.ng-dirty:focus {
+    border-color: #953b39;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392; }
 
-.animate-switch.ng-leave-active, animate-switch.ng-enter {
-  top: 50px; }
+.ngRow:hover {
+  background-color: #ddedf0; }
 
-.animate-switch.ng-leave, .animate-switch.ng-enter-active {
-  top: 0; }
-
-/*** MEDIA QUERIES ***/
 @media (max-width: 480px) {
   .header select {
     width: 80%; }
@@ -320,8 +262,5 @@ input[type="color"]:focus,
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis; } }
-
-h1 {
-  color: red; }
 
 /*# sourceMappingURL=maps/barcamp.css.map */

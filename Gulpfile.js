@@ -5,7 +5,7 @@ const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('sass', () => {
- return gulp.src('./app/styles/scss/*.scss')
+ return gulp.src('./app/styles/scss/**/*.scss')
   .pipe(sourcemaps.init())
   .pipe(sass.sync().on('error', sass.logError))
   .pipe(sourcemaps.write('./maps'))
@@ -13,5 +13,5 @@ gulp.task('sass', () => {
 });
 
 gulp.task('default', () => {
-  gulp.watch('./app/styles/scss/*.scss', ['sass']);
+  gulp.watch('./app/styles/scss/**/*.scss', ['sass']);
 });

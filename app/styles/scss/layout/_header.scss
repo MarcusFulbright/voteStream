@@ -1,0 +1,26 @@
+/* HEADER */
+
+.header {
+	position:fixed;
+	left: 0;
+	top: 0;
+	height: 50px;
+	width: 100%;
+	background-color: $primary-color; /* fallback color if gradients are not supported */
+	@include linear-gradient(top, $primary-color, $primary-color-darker);
+	color: white;
+	padding: 14px 15px;
+	z-index: 9999;
+
+	#category-filter {
+		width: 60%;
+	}
+
+	#vote-counter {
+		width: 40%;
+	}
+}
+
+.top-buffer { 
+	margin-top: 20px; 
+}

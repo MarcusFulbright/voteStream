@@ -1,0 +1,33 @@
+@import 'base/colors-mixins';
+/* DEFAULT */
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+
+body {
+	margin-bottom: 150px;
+}
+
+
+h1, h2 {
+	font-family: $headings;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	color: $secondary-color;
+}
+
+.container .sessions,
+.container .results {
+	padding-top: 30px;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+blockquote {
+	font-size: 8pt;
+	padding: 3;
+	margin: 0;
+}
