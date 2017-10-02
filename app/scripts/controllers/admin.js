@@ -14,13 +14,29 @@ app.controller('AdminCtrl', function($scope, $filter, SessionList, Polling, Cons
           $scope.$apply();
       }
   });
-
+  firebase.database().ref('/Schedules').once('value').then(function(snapshot) {
+    $scope.scheduleFromFirebase = (snapshot.val());
+    $scope.addIsScheduledPropertyToSessions($scope.sessions, $scope.scheduleFromFirebase);
+  });
 
   $scope.sessions = [];
+  $scope.scheduleFromFirebase = [];
   $scope.rooms = ["Alpha", "Zulu", "Whiskey", "Tango"];
   $scope.times = ["09:30", "10:30", "11:30", "1:30", "2:30", "3:30" ];
-  //to add rank for the session (ie, 1, 2, 3, must first create a new unsorted array then sort the array by the total votes)
+  
+  $scope.addIsScheduledPropertyToSessions = (sessions, schedule) => {
+    schedule = schedule.Morning;
+    angular.forEach(sessions, function(session, key1) {
+      angular.forEach(schedule, function(sch, key2){
+        if(session.Nid === sch.Nid){
+          console.log('match', session.Nid)
+          session["is_Scheduled"] = true;
+        }
+      });
+    });
+  }
 
+  //to add rank for the session (ie, 1, 2, 3, must first create a new unsorted array then sort the array by the total votes)
    $scope.setTime = (e, session) => {
     session.Time = e;
   }
@@ -78,10 +94,14 @@ app.controller('AdminCtrl', function($scope, $filter, SessionList, Polling, Cons
 
   const updateScheduleToFirebase = (timeOfDay, schedule) =>{
     console.log(schedule)
-    return ($http.put(`${Constants.firebaseUrl}/Schedule/${timeOfDay}.json`, schedule))
+    angular.forEach(schedule, function (session) {
+      session["is_Scheduled"] = true;
+    });
+    return ($http.put(`${Constants.firebaseUrl}/Schedules/${timeOfDay}.json`, schedule))
     .then(() => {
       console.log('Schedule created')
-    })
+    });
+    return ($http.patch(`${Constants.firebaseUrl}/Sessions/`))
     .catch(console.error);
   }
 

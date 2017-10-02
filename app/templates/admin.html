@@ -68,23 +68,26 @@
 		</thead>
 
 		<tbody>
-			<tr data-ng-class="{hide: hideRemoved && s.inSync.removed}"
+			<tr 
+					data-ng-class="{hide: hideRemoved && s.inSync.removed}"
 			 		data-time-value="{{timeSelect}}"
 			 		data-room-value="{{roomSelect}}"
-					ng-repeat="s in sessions | orderBy:sortByType:reverseSort | filter:{availability: sessions.availability}">
-
+					ng-repeat="s in sessions | orderBy:sortByType:reverseSort | filter:{availability: sessions.availability}"
+					ng-model="scheduleFromFirebase">
 				<td class="text-center">{{s.Rank}}</td>
 				<td>{{s.total_votes}}</td>
 				<td>{{s.Title}}</td>
 				<td>{{s['First Name']}} {{s['Last Name']}}</td>
-			  	<td>
+		  	<td ng-if="!s.is_Scheduled">
 				  <select ng-model="timeSelect" ng-change="setTime(timeSelect, s)">
 					  <!-- This will allow for an admin to deselect a value -->
 					  <option value="null" selected>---</option>
 
 					  <option ng-repeat="time in times" value="{{ time }}">{{ time }}</option>
 			  	  </select>
+			  	<!-- <select ng-options=""	 -->
 				</td>
+
 
 				<!-- <td><select ng-options="room as room for room in rooms" ng-model="roomSelect" ng-change="setRoom(roomSelect, s)"></select></td> -->
 
@@ -104,3 +107,4 @@
 <button type="button" class="btn btn-primary btn-lg btn-block" data-ng-click="prepareSchedule(sessions.Availability)">Save</button>
 <button type="button" class="btn btn-secondary btn-lg btn-block">Reset</button>
 </section>
+					<!-- ng-if="s."> -->
