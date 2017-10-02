@@ -17,6 +17,8 @@ app.controller('AdminCtrl', function($scope, $filter, SessionList, Polling, Cons
   firebase.database().ref('/Schedules').once('value').then(function(snapshot) {
     $scope.scheduleFromFirebase = (snapshot.val());
     $scope.addIsScheduledPropertyToSessions($scope.sessions, $scope.scheduleFromFirebase);
+    $scope.$apply();
+
   });
 
   $scope.sessions = [];
@@ -31,6 +33,8 @@ app.controller('AdminCtrl', function($scope, $filter, SessionList, Polling, Cons
         if(session.Nid === sch.Nid){
           console.log('match', session.Nid)
           session["is_Scheduled"] = true;
+          session["Room"] = sch.Room;
+          session["Time"] = sch.Time;
         }
       });
     });
@@ -93,7 +97,6 @@ app.controller('AdminCtrl', function($scope, $filter, SessionList, Polling, Cons
   }
 
   const updateScheduleToFirebase = (timeOfDay, schedule) =>{
-    console.log(schedule)
     angular.forEach(schedule, function (session) {
       session["is_Scheduled"] = true;
     });

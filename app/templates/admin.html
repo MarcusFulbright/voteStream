@@ -73,7 +73,7 @@
 			 		data-time-value="{{timeSelect}}"
 			 		data-room-value="{{roomSelect}}"
 					ng-repeat="s in sessions | orderBy:sortByType:reverseSort | filter:{availability: sessions.availability}"
-					ng-model="scheduleFromFirebase">
+					ng-model="sessions">
 				<td class="text-center">{{s.Rank}}</td>
 				<td>{{s.total_votes}}</td>
 				<td>{{s.Title}}</td>
@@ -87,11 +87,11 @@
 			  	  </select>
 			  	<!-- <select ng-options=""	 -->
 				</td>
-
+				<td ng-if="s.is_Scheduled">{{s.Time}}</td>
 
 				<!-- <td><select ng-options="room as room for room in rooms" ng-model="roomSelect" ng-change="setRoom(roomSelect, s)"></select></td> -->
 
-				<td>
+				<td ng-if="!s.is_Scheduled">
 				  <select ng-model="roomSelect" ng-change="setRoom(roomSelect, s)">
 					  <!-- This will allow for an admin to deselect a value -->
 					  <option value="null" selected>---</option>
@@ -99,6 +99,7 @@
 					  <option ng-repeat="room in rooms" value="{{ room }}">{{ room }}</option>
 				  </select>
 				</td>
+				<td ng-if="s.is_Scheduled">{{s.Room}}</td>
 
 				<td>{{s.Availability}}</td>
 			</tr>
