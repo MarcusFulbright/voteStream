@@ -31,7 +31,6 @@ app.controller('AdminCtrl', function($scope, $filter, SessionList, Polling, Cons
     angular.forEach(sessions, function(session, key1) {
       angular.forEach(schedule, function(sch, key2){
         if(session.Nid === sch.Nid){
-          console.log('match', session.Nid)
           session["is_Scheduled"] = true;
           session["Room"] = sch.Room;
           session["Time"] = sch.Time;
@@ -41,12 +40,12 @@ app.controller('AdminCtrl', function($scope, $filter, SessionList, Polling, Cons
   }
 
   //to add rank for the session (ie, 1, 2, 3, must first create a new unsorted array then sort the array by the total votes)
-   $scope.setTime = (e, session) => {
-    session.Time = e;
+   $scope.setTime = (time, session) => {
+    session.Time = time;
   }
 
-  $scope.setRoom = (e, session) => {
-    session.Room = e;
+  $scope.setRoom = (room, session) => {
+    session.Room = room;
   }
 
   $scope.addRankingByVotes = (sessions) =>{
@@ -74,10 +73,7 @@ app.controller('AdminCtrl', function($scope, $filter, SessionList, Polling, Cons
         preparedSchedule.push(session);
       }
     });
-    // console.log(preparedSchedule)
-    // for (var i = 0; i < preparedSchedule.length; i++){
-    //   conflictCheck.push([preparedSchedule[i].Time, preparedSchedule[i].Room])
-    // }
+ 
     for (var i = 0; i < preparedSchedule.length; i++){
       var len = preparedSchedule.length;
       var current = preparedSchedule[i];
