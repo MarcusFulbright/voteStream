@@ -6,9 +6,7 @@
 			<a href="{{scheduleUrl}}" target="_blank" class="header-link">Schedule</a>
 			<span> | Votes Remaining: {{remainingVotes}}</span>
 
-			<button class="btn btn-primary pull-right" ng-if="user.admin">
-			  <a href="#/admin" class="admin-link">Admin</a>
-			</button>
+			<a class="btn btn-primary pull-right admin-link" ng-if="isAdminUser" href="/#!/admin">Admin</a>
 		</div>
 	</div>
 </div>
@@ -18,6 +16,11 @@
         <li ng-class="{active: tab === 'morning'}"><a ng-click="showTab('morning')">Morning</a></li>
         <li ng-if="polling.sessions === 'afternoon' || polling.showAfternoonTab" ng-class="{active: tab === 'afternoon'}"><a ng-click="showTab('afternoon')"  >Afternoon</a></li>
     </ul>
+    <ul class="nav nav-tabs sort-tabs">
+        <li role="presentation" class="active"><a href="" aria-controls="home" role="tab" data-toggle="tab" ng-click="setFilterString('Title')">Title</a></li>
+        <li role="presentation"><a href="" aria-controls="home" role="tab" data-toggle="tab" ng-click="setFilterString('Last Name')">Speaker</a></li>
+        <li role="presentation"><a href="" aria-controls="home" role="tab" data-toggle="tab" ng-click="setFilterString('Session Category')">Category</a></li>
+    </ul>
 </div>
 
 <div>
@@ -26,7 +29,8 @@
         <!-- ///////////////////////////////////////////////TODO: change has voted to edit mode///////////////// -->
         <!-- ///////////TODO: remove get-remaing-votes, session listing will handle via watcher///////////////// -->
         <session
-            ng-repeat="session in sessions track by $index"
+            ng-repeat="session in sessions | orderBy:filterBy track by $index"
+            ng-model="filterBy"
             ng-show="session.Availability.includes('Morning')"
             session="session"
             index="$index"
@@ -45,8 +49,9 @@
         <!-- ///////////////////////////////////////////////TODO: change has voted to edit mode///////////////// -->
         <!-- ///////////TODO: remove get-remaing-votes, session listing will handle via watcher///////////////// -->
         <session
-            ng-repeat="session in sessions track by $index"
-            ng-show="session.Availability.includes('Afternoon')"
+            ng-repeat="session in sessions | orderBy:filterBy track by $index"
+            ng-model="filterBy"
+            ng-show="session.Availability.includes('Afternoon') && !session.selected"
             session="session"
             index="$index"
             votes="voteArray"
@@ -64,14 +69,15 @@
 		<button
 			class="btn btn-danger col-sm-2"
 			type="button"
-			ng-click="resetVote()"
+			data-toggle="modal"
+            data-target="#cancel-modal"
 			ng-if="editMode"
 			ng-disabled="!polling.open || !hasUserVoted">Cancel</button>
 
 		<button
             class="btn btn-success col-sm-2"
             data-toggle="modal"
-            data-target=".bs-example-modal-sm"
+            data-target="#titles-modal"
             type="button"
             ng-click="voteSubmit()"
             ng-if="editMode"
@@ -85,6 +91,8 @@
     </div>
 </div>
 
+
+<!-- Modal displays titles selected once user submits -->
 <div class="modal fade bs-example-modal-sm" id="error-modal" tabindex="-1">
     <div class="modal-dialog modal-sm" >
         <div class="modal-content">
@@ -92,6 +100,20 @@
             <h5 ng-repeat="title in titlesArray">{{title}}</h5>
             <div>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal warns user that new votes will not be saved if user cancels -->
+<div class="modal fade bs-example-modal-sm" id="cancel-modal" tabindex="-1">
+    <div class="modal-dialog modal-sm" >
+        <div class="modal-content">
+            <h3 style="">New selections will not be saved upon cancelling</h3>
+            <h3 style="">Do you wish to continue?</h3>
+            <div>
+                <button type="button" class="btn btn-default" ng-click="resetVote()" data-dismiss="modal">Yes, cancel my selections</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
             </div>
         </div>
     </div>

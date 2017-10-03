@@ -4,7 +4,7 @@ app.controller('FullScheduleCtrl', function ($scope) {
 
   $scope.scheduleByTime = [];
   $scope.rooms = [];
-  $scope.filterBy = "time";
+  $scope.filterBy = "Time";
   $scope.morningRooms = [];
   $scope.afternoonRooms = [];
 
@@ -34,17 +34,18 @@ app.controller('FullScheduleCtrl', function ($scope) {
     // This JS will execute on page load
     firebase.database().ref('/Schedules').on('value', function(schedule){
         $scope.scheduleHasLoaded = true;
-
         // If morning schedule has been posted to Firebase, populate the schedule
         if (schedule.val() && schedule.val().Morning){
             $scope.morningRooms = [];
-            $scope.sortScheduleByTime(schedule.val(), "Morning");
+            // $scope.sortScheduleByTime(schedule.val(), "Morning");
+            $scope.morningRooms = schedule.val().Morning;
         }
 
         // If afternoon schedule has been posted to Firebase, populate the schedule
         if (schedule.val() && schedule.val().Afternoon){
             $scope.afternoonRooms = [];
-            $scope.sortScheduleByTime(schedule.val(), "Afternoon");
+            // $scope.sortScheduleByTime(schedule.val(), "Afternoon");
+            $scope.afternoonRooms = schedule.val().Afternoon
         }
 
         if (!schedule.val()) {

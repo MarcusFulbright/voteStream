@@ -5,11 +5,13 @@
 
 <div class="container schedule sessions" id="myTabs">
     <ul class="nav nav-tabs" role="tablist" ng-hide="!morningRooms.length">
-        <li role="presentation" class="active"><a href="" aria-controls="home" role="tab" data-toggle="tab" ng-click="setFilterString('time')">Time</a></li>
+        <li role="presentation" class="active"><a href="" aria-controls="home" role="tab" data-toggle="tab" ng-click="setFilterString('Time')">Time</a></li>
 
-        <li role="presentation"><a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="setFilterString('room')">Room</a></li>
+        <li role="presentation"><a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="setFilterString('Room')">Room</a></li>
 
-        <li role="presentation"><a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="setFilterString('session.speaker')">Speaker</a></li>
+        <li role="presentation"><a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="setFilterString('Speaker')">Speaker</a></li>
+
+        <li role="presentation"><a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="setFilterString('Title')">Title</a></li>
     </ul>
 
 	<div class="container" ng-if="!scheduleHasLoaded">
@@ -27,12 +29,13 @@
 
 		<div class="tab-content" ng-model="filterBy" ng-repeat="session in afternoonRooms | orderBy:filterBy">
 			<div class="schedule" id="afternoon">
-			    <schedule ng-hide="!session.session.speaker">
-					<p>{{session.session.title}}</p>
- 					<p>{{session.session.speaker}}</p>
- 					<p>{{session.room}} | {{session.time}}</p>
- 					<hr>
-			    </schedule>
+		    <div>
+					<p>{{session.Title}}</p>
+ 					<p>{{session.Speaker}}</p>
+ 					<p>{{session.Room}} | {{session.Time}}</p>
+ 					<p>{{session.Body}}</p>
+					<hr>
+		    </div>
 			</div>
 		</div>
 	</section>
@@ -43,12 +46,13 @@
 
 		<div class="tab-content" ng-model="filterBy" ng-repeat="session in morningRooms | orderBy:filterBy">
 			<div class="schedule" id="morning">
-			    <schedule ng-hide="!session.session.speaker">
-				   <p>{{session.session.title}}</p>
-				   <p>{{session.session.speaker}}</p>
-				   <p>{{session.room}} | {{session.time}}</p>
-				   <hr>
-			    </schedule>
+		    <div>
+			   <p>{{session.Title}}</p>
+			   <p>{{session.Speaker}}</p>
+			   <p>{{session.Room}} | {{session.Time}}</p>
+			   <p>{{session.Body}}</p>
+			   <hr>
+		    </div>
 			</div>
 		</div>
 	</section>
