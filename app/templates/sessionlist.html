@@ -51,7 +51,7 @@
         <session
             ng-repeat="session in sessions | orderBy:filterBy track by $index"
             ng-model="filterBy"
-            ng-show="session.Availability.includes('Afternoon')"
+            ng-show="session.Availability.includes('Afternoon') && !session.selected"
             session="session"
             index="$index"
             votes="voteArray"
