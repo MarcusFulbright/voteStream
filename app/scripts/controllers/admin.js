@@ -1,44 +1,10 @@
 'use strict';
-app.controller('AdminCtrl', function($scope, $filter, SessionList, Polling, Constants, $http){
+app.controller('AdminCtrl', function($scope, $filter, SessionList, Polling, Constants, Admin, $http){
   // This JS will execute on page load
-  firebase.database().ref('/Sessions').on('value', (sessions) => {
-      if (sessions.val()) {
-          $scope.addRankingByVotes(sessions.val());
-          // $scope.unSortedSessionsObject = sessions.val();
-          // $scope.MakeUnSortedSessionsArray(sessions.val());
-          // $scope.addSessionRankingByVotes();
-      }
 
-      //checks if $digest is in progress, if first time user visit or on refresh $scope.$apply, else simply let digest run
-      if (!$scope.$$phase) {
-          $scope.$apply();
-      }
-  });
-  firebase.database().ref('/Schedules').once('value').then(function(snapshot) {
-    $scope.scheduleFromFirebase = (snapshot.val());
-    $scope.addIsScheduledPropertyToSessions($scope.sessions, $scope.scheduleFromFirebase);
-    $scope.$apply();
-
-  });
-
-  $scope.sessions = [];
-  $scope.scheduleFromFirebase = [];
   $scope.rooms = ["Alpha", "Zulu", "Whiskey", "Tango"];
   $scope.times = ["09:30", "10:30", "11:30", "1:30", "2:30", "3:30" ];
   
-  $scope.addIsScheduledPropertyToSessions = (sessions, schedule) => {
-    schedule = schedule.Morning;
-    angular.forEach(sessions, function(session, key1) {
-      angular.forEach(schedule, function(sch, key2){
-        if(session.Nid === sch.Nid){
-          session["is_Scheduled"] = true;
-          session["Room"] = sch.Room;
-          session["Time"] = sch.Time;
-        }
-      });
-    });
-  }
-
   //to add rank for the session (ie, 1, 2, 3, must first create a new unsorted array then sort the array by the total votes)
    $scope.setTime = (time, session) => {
     session.Time = time;
@@ -56,54 +22,45 @@ app.controller('AdminCtrl', function($scope, $filter, SessionList, Polling, Cons
       SessionListings[i].Rank = i+1;
       i++;
     });
-    $scope.sessions = SessionListings;
+    return SessionListings;
   }
 
   $scope.prepareSchedule = (timeOfDay) => {
     let preparedSchedule = [];
     let conflictCheck = [];
     if(!timeOfDay){
-      alert('Select Morning or Afternoon from the sessions dropdown');
+      alert('Select Morning or Aftxernoon from the sessions dropdown');
     }
     timeOfDay = timeOfDay.split("")[0].toUpperCase() + timeOfDay.slice(1);    
-    angular.forEach($scope.sessions, function(session){
-      if (!session.Time && !session.Room){
-        //
-      } else {
+    angular.forEach($scope.sessions, function(session, index){
+      if (session.Time && session.Room){
+        session.index = index;
         preparedSchedule.push(session);
       }
     });
- 
-    for (var i = 0; i < preparedSchedule.length; i++){
-      var len = preparedSchedule.length;
-      var current = preparedSchedule[i];
-      var previous = preparedSchedule[(i+len-1)%len];
-      var next = preparedSchedule[(i+1)%len];
-      if(current.Time === next.Time && current.Room === next.Room){
-        console.log('stop!')
-        alert('There are scheduling conflicts with' + current.Title + ' and ' + next.Title)
-      }
-    }
-
     updateScheduleToFirebase(timeOfDay, preparedSchedule)
   }
 
-  $scope.checkConflicts = (array) => {
-
-  }
-
   const updateScheduleToFirebase = (timeOfDay, schedule) =>{
-    angular.forEach(schedule, function (session) {
-      session["is_Scheduled"] = true;
-    });
+    const scheduleIndexes = schedule.map(each => each.index)
     return ($http.put(`${Constants.firebaseUrl}/Schedules/${timeOfDay}.json`, schedule))
-    .then(() => {
+      .then(() => {
+        //index array has to match index in firebase
+      Admin.selectSessions(scheduleIndexes)
       console.log('Schedule created')
     });
-    return ($http.patch(`${Constants.firebaseUrl}/Sessions/`))
-    .catch(console.error);
   }
-
-
+  firebase.database().ref('/').on('value', (root) => {
+      const {Sessions, Schedules} = root.val();
+      if (Schedules) {
+        // Admin.mapSessions(Sessions, Schedules.Morning);
+        let mapSessions = Admin.mapSessions(Sessions, Schedules.Morning);
+        $scope.sessions = $scope.addRankingByVotes(mapSessions);
+      }
+      //checks if $digest is in progress, if first time user visit or on refresh $scope.$apply, else simply let digest run
+      if (!$scope.$$phase) {
+          $scope.$apply();
+      }
+  });
 })//end
 
