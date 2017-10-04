@@ -24,29 +24,18 @@ blockquote {
   margin: 0; }
 
 /* HEADER */
-.header {
-  position: fixed;
-  left: 0;
-  top: 0;
-  height: 50px;
-  width: 100%;
+.custom-nav {
   background-color: #932318;
-  /* fallback color if gradients are not supported */
-  background-image: -webkit-linear-gradient(top, #932318, #671911);
-  /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
-  background-image: -moz-linear-gradient(top, #932318, #671911);
-  /* For Firefox (3.6 to 15) */
-  background-image: -o-linear-gradient(top, #932318, #671911);
-  /* For old Opera (11.1 to 12.0) */
-  background-image: linear-gradient(top, #932318, #671911);
-  /* Standard syntax; must be last */
-  color: white;
-  padding: 14px 15px;
-  z-index: 9999; }
-  .header #category-filter {
-    width: 60%; }
-  .header #vote-counter {
-    width: 40%; }
+  height: 80px;
+  padding: 20px; }
+
+.sub-nav {
+  background-color: #feb336;
+  height: 40px;
+  padding: 10px 20px; }
+
+.border {
+  border-right: 1px solid #999; }
 
 .top-buffer {
   margin-top: 20px; }
@@ -71,8 +60,7 @@ blockquote {
   background: #feb336 !important;
   color: #fff;
   border: none;
-  border-radius: 0;
-  margin: 20px 10px 10px 10px; }
+  border-radius: 0; }
 
 /* FOOTER */
 .credits {
