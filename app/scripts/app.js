@@ -15,30 +15,28 @@ const app = angular.module('BarcampApp', ['ngRoute'])
 	});
 
 	$routeProvider
-		// .when('/', {
-		// 	templateUrl : '/templates/home.html',
-		// })
 	.when('/admin', {
 		templateUrl : '/templates/admin.html',
 		controller : 'AdminCtrl',
-		adminAccess: true,
 		resolve: {
-			Sessions: function (User, $location, SessionListing) {
-				return User.getUser().catch(err => {
-					$location.path('/admin');
-
-				});
-			}, 
+			AuthUser: function (User, $location) {
+				return User.checkAdminUser()
+				.then(isAuth => {
+					if (!isAuth) {
+						$location.path('/login');
+					}
+				})
+				.catch(console.error);
+			},
 			SessionList: function(SessionListing){
 				return SessionListing.getAllSessions().then(session => session);
-			} 
+			}
 
 		}
 	})
 	.when('/fullschedule', {
 		templateUrl : '/templates/fullschedule.html',
 		controller : 'FullScheduleCtrl',
-		adminAccess: true,
 		resolve: {
 			SessionList: function(SessionListing){
 				return SessionListing.getAllSessions().then(session => session);
@@ -50,13 +48,14 @@ const app = angular.module('BarcampApp', ['ngRoute'])
 		controller: 'SessionListingCtrl',
 		resolve: {
 			AuthUser: function(User, $location) {
-				return User.getUser().catch(err => {
+				return User.getUser()
+				.catch(err => {
 					$location.path('/login');
 				});
 			},
-			// PollingPeriod: function(Polling) {
-			// 	return Polling.getPollingPeriods().then(period => period);
-			// },
+
+			isAdminUser: (User) => User.checkAdminUser().catch(console.error),
+
 			SessionList: function(SessionListing){
 				return SessionListing.getAllSessions().then(session => session);
 			}

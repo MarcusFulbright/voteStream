@@ -1,10 +1,11 @@
 'use strict';
 
-app.controller('SessionListingCtrl', function($scope, $location, Vote, User, Constants, AuthUser, Polling, SessionList) {
+app.controller('SessionListingCtrl', function($scope, $location, Vote, User, isAdminUser, Constants, AuthUser, Polling, SessionList) {
 
 	// Scoped Variables
 	$scope.maxVotes = Constants.maxVotes;
 	$scope.user = AuthUser;
+	$scope.isAdminUser = isAdminUser;
 	$scope.polling;
 	$scope.sessions = SessionList; // resolve pattern
 	$scope.tab = undefined; // default, also required to ensure first time variables are set in Polling.realTimePolling
