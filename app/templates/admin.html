@@ -68,39 +68,38 @@
 		</thead>
 
 		<tbody>
-			<tr data-ng-class="{hide: hideRemoved && s.inSync.removed}"
+			<tr 
+					data-ng-class="{hide: hideRemoved && s.inSync.removed}"
 			 		data-time-value="{{timeSelect}}"
 			 		data-room-value="{{roomSelect}}"
-					ng-repeat="s in sessions | orderBy:sortByType:reverseSort | filter:{availability: sessions.availability}">
-
+					ng-repeat="s in sessions | orderBy:sortByType:reverseSort | filter:{availability: sessions.availability}"
+					ng-model="sessions">
 				<td class="text-center">{{s.Rank}}</td>
 				<td>{{s.total_votes}}</td>
 				<td>{{s.Title}}</td>
 				<td>{{s['First Name']}} {{s['Last Name']}}</td>
-			  	<td>
-				  <select ng-model="timeSelect" ng-change="setTime(timeSelect, s)">
+		  	<td>
+				  <select ng-model="s.Time" ng-change="setTime(s.Time, s)">
 					  <!-- This will allow for an admin to deselect a value -->
 					  <option value="null" selected>---</option>
 
 					  <option ng-repeat="time in times" value="{{ time }}">{{ time }}</option>
 			  	  </select>
+			  	<!-- <select ng-options=""	 -->
 				</td>
-
-				<!-- <td><select ng-options="room as room for room in rooms" ng-model="roomSelect" ng-change="setRoom(roomSelect, s)"></select></td> -->
-
+	
 				<td>
-				  <select ng-model="roomSelect" ng-change="setRoom(roomSelect, s)">
+				  <select ng-model="s.Room" ng-change="setRoom(s.Room, s)">
 					  <!-- This will allow for an admin to deselect a value -->
 					  <option value="null" selected>---</option>
 
 					  <option ng-repeat="room in rooms" value="{{ room }}">{{ room }}</option>
 				  </select>
 				</td>
-
 				<td>{{s.Availability}}</td>
-			</tr>
 		</tbody>
 	</table>
 <button type="button" class="btn btn-primary btn-lg btn-block" data-ng-click="prepareSchedule(sessions.Availability)">Save</button>
 <button type="button" class="btn btn-secondary btn-lg btn-block">Reset</button>
 </section>
+					<!-- ng-if="s."> -->
