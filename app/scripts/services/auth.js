@@ -6,7 +6,8 @@ app.factory('AuthService', function ($http, Constants) {
 	//used in signin.js
 	const getAllUsers = () => {
 		return $http.get(`${Constants.firebaseUrl}/.json`)
-		.then(data => data.data.Users);
+		.then(data => data.data.Users)
+		.catch(console.error);
 	};
 
 	return { getAllUsers };

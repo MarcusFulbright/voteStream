@@ -2,8 +2,6 @@
 
 app.factory('Polling', function ($http, Constants) {
 
-	const realTimePolling = firebase.database().ref('/PollingState')
-
 	const determineSession = ({ pollingPeriods, showAfternoonTab }) => {
 		const morning = pollingPeriods[0];
 		const afternoon = pollingPeriods[1];
@@ -42,6 +40,6 @@ app.factory('Polling', function ($http, Constants) {
 		.catch(console.error);
 	};
 
-	return { determineSession,  realTimePolling, setShowAfternoonTab };
+	return { determineSession, setShowAfternoonTab };
 
 });

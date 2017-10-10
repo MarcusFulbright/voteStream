@@ -1,4 +1,3 @@
-
     <div class="row custom-nav">
         <div class="col-xs-4">
             <button class="btn btn-primary" data-ng-click="logout()">Log Out!</button>
@@ -35,13 +34,11 @@
 
     </div>
 
-
-<!--     <div class="sessions" id="myTabs">
-        <ul class="nav nav-tabs" >
-            <li ng-class="{active: tab === 'morning'}"><a ng-click="showTab('morning')">Morning</a></li>
-            <li ng-if="polling.sessions === 'afternoon' || polling.showAfternoonTab" ng-class="{active: tab === 'afternoon'}"><a ng-click="showTab('afternoon')"  >Afternoon</a></li>
-        </ul>
-    </div> -->
+<!--     <ul class="nav nav-tabs sort-tabs">
+        <li role="presentation" class="active"><a href="" aria-controls="home" role="tab" data-toggle="tab" ng-click="setFilterString('Title')">Title</a></li>
+        <li role="presentation"><a href="" aria-controls="home" role="tab" data-toggle="tab" ng-click="setFilterString('Last Name')">Speaker</a></li>
+        <li role="presentation"><a href="" aria-controls="home" role="tab" data-toggle="tab" ng-click="setFilterString('Session Category')">Category</a></li>
+    </ul> -->
 
 <div>
   <!--morning voting-->
@@ -55,7 +52,8 @@
         <div ng-show="!polling.open"><p class="lead">Morning Voting Has Closed!</p></div>
 
         <session
-            ng-repeat="session in sessions track by $index"
+            ng-repeat="session in sessions | orderBy:filterBy track by $index"
+            ng-model="filterBy"
             ng-show="session.Availability.includes('Morning')"
             session="session"
             index="$index"
@@ -80,8 +78,9 @@
         <div ng-show="!polling.open"><p class="lead">Afternoon Voting Has Closed!</p></div>
 
         <session
-            ng-repeat="session in sessions track by $index"
-            ng-show="session.Availability.includes('Afternoon')"
+            ng-repeat="session in sessions | orderBy:filterBy track by $index"
+            ng-model="filterBy"
+            ng-show="session.Availability.includes('Afternoon') && !session.selected"
             session="session"
             index="$index"
             votes="voteArray"
@@ -99,14 +98,15 @@
 		<button
 			class="btn btn-danger col-sm-2"
 			type="button"
-			ng-click="resetVote()"
+			data-toggle="modal"
+            data-target="#cancel-modal"
 			ng-if="editMode"
 			ng-disabled="!polling.open || !hasUserVoted">Cancel</button>
 
 		<button
             class="btn btn-success col-sm-2"
             data-toggle="modal"
-            data-target=".bs-example-modal-sm"
+            data-target="#titles-modal"
             type="button"
             ng-click="voteSubmit()"
             ng-if="editMode"
@@ -120,6 +120,8 @@
     </div>
 </div>
 
+
+<!-- Modal displays titles selected once user submits -->
 <div class="modal fade bs-example-modal-sm" id="error-modal" tabindex="-1">
     <div class="modal-dialog modal-sm" >
         <div class="modal-content">
@@ -132,4 +134,16 @@
     </div>
 </div>
 
+<!-- Modal warns user that new votes will not be saved if user cancels -->
+<div class="modal fade bs-example-modal-sm" id="cancel-modal" tabindex="-1">
+    <div class="modal-dialog modal-sm" >
+        <div class="modal-content">
+            <h3 style="">New selections will not be saved upon cancelling</h3>
+            <h3 style="">Do you wish to continue?</h3>
+            <div>
+                <button type="button" class="btn btn-default" ng-click="resetVote()" data-dismiss="modal">Yes, cancel my selections</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
 </div>

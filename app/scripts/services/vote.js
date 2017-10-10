@@ -6,12 +6,14 @@ app.factory('Vote', function($http, Constants) {
 	/* Put request to update user's session votes */
 	const updateUserVotes = (user, jsonArray) => {
 		return $http.put(`${Constants.firebaseUrl}/Users/${user}/sessions.json`, jsonArray)
+		.catch(console.error);
 	};
 
 	/* Get requet to get user's session votes */ 
 	const getUserVotes = (user) => {
 		return $http.get(`${Constants.firebaseUrl}/Users/${user}/sessions.json`)
-		.then(data => data.data);
+		.then(data => data.data)
+		.catch(console.error);
 	};
 
 	/* Increase the number of session's total_votes */

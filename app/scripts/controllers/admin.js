@@ -1,169 +1,86 @@
 'use strict';
+app.controller('AdminCtrl', function($scope, $filter, Polling, Constants, Admin, Rooms, Times) {
 
-app.controller('AdminCtrl', function ($scope, $filter, SessionList, Polling, Constants, Rooms, TimeSlots, $http) {
+  // $scope.rooms = Rooms;
+  // $scope.times = Times; // Will need to select times.Morning or times.Afternoon. Can simplify if need be.
+  // TODO remove after testing is done
+  $scope.rooms = ["Alpha", "Zulu", "Whiskey", "Tango"];
+  $scope.times = ["09:30", "10:30", "11:30", "1:30", "2:30", "3:30" ];
 
-    // This JS will execute on page load
-    firebase.database().ref('/Sessions').on('value', (sessions) => {
-        if (sessions.val()) {
-            // $scope.unSortedSessionsObject = sessions.val();
-            $scope.MakeUnSortedSessionsArray(sessions.val());
-            $scope.addSessionRankingByVotes();
-        }
+  const addRankingByVotes = (sessions) =>{
+    const SessionListings = $filter('orderBy')(sessions, 'total_votes', true);
 
-        //checks if $digest is in progress, if first time user visit or on refresh $scope.$apply, else simply let digest run
-        if (!$scope.$$phase) {
-            $scope.$apply();
-        }
+    return SessionListings.map((session, i) => {
+        session.Rank = i + 1;
+        return session;
     });
-
-  $scope.unSortedSessionsArray = [];
-  $scope.sessions = [];
-  $scope.rooms = Rooms; // Resolved: ["Kitchen", "Attic", "Basement", "Bathroom"]
-  $scope.times = TimeSlots; // Resolved: {afternoon: Array(4), morning: Array(4)} 
-  $scope.availability = Polling;
-  $scope.sortByType = "rank";
-  $scope.reverseSort = false;
-  let morningSchedule = {};
-  let afternoonSchedule = {};
-
-  let scheduleTemplate = {
-      "morning_sessions": {
-      "rooms": []
-    },
-    "afternoon_sessions": {
-      "rooms": []
-    }
   };
 
+  //to add rank for the session (ie, 1, 2, 3, must first create a new unsorted array then sort the array by the total votes)
+   $scope.setTime = (time, session) => {
+    session.Time = time;
+   };
 
-  let buildScheduleTemplate = () => {
-    angular.forEach($scope.rooms, function(room, key){
-      let roomObject = {};
-      roomObject["name"] = room;
-      roomObject["times"] = {};
-      scheduleTemplate.morning_sessions.rooms[key] = roomObject;
-      scheduleTemplate.afternoon_sessions.rooms[key] = roomObject;
-      angular.forEach($scope.times, function(time, key2){
-        let timeObject = {};
-        timeObject["time"] = time;
-        timeObject["session"] = {
-          "title" : "",
-          "speaker" : "",
-          "url" : ""
-        };
-        scheduleTemplate.morning_sessions.rooms[key].times[key2] = timeObject;
-        scheduleTemplate.afternoon_sessions.rooms[key].times[key2] = timeObject;
-      });
-    });
-  }
-  buildScheduleTemplate();
+  $scope.setRoom = (room, session) => {
+    session.Room = room;
+  };
 
-  $scope.MakeUnSortedSessionsArray = (sessionsObject) => {
-    $scope.unSortedSessionsObject = [];
-    $scope.unSortedSessionsArray = [];
+  $scope.clearSession = (session) => {
+    session.Room = '';
+    session.Time = '';
+  };
 
-    angular.forEach(sessionsObject, function(value, key){
-      $scope.unSortedSessionsArray.push(value)
-    });
-};
+  $scope.clearAllSessions = () => {
+      $scope.realTimeSessions.forEach(each => $scope.clearSession(each));
+  };
 
-// TODO calling this in the real time reference
-// $scope.MakeUnSortedSessionsArray();
-
-  //filter sessions by total_votes
-  $scope.addSessionRankingByVotes = () => {
-    let SessionListings = $filter('orderBy')($scope.unSortedSessionsArray, 'total_votes', !$scope.reverse);
-    // TODO is this supposed to be here? It was removing the first session obj
-    // SessionListings.shift();
-    let i = 0;
-      angular.forEach(SessionListings, function(value, key){
-        SessionListings[i].Rank = i+1;
-        i++;
-      });
-    $scope.sessions = SessionListings;
-  }
-
-// TODO calling this in the real time reference
-// $scope.addSessionRankingByVotes();
-
-  $scope.setTime = (e, session) => {
-    session.Times = e;
-  }
-  $scope.setRoom = (e, session) => {
-    session.Room = e;
-  }
-
-  let checkForConflicts = (arrayData) => {
-    arrayData.sort();
-    for (let i = 0; i < arrayData.length -1; i++){
-      // Will skip over nulled out times and rooms
-      if (arrayData[i][0] === null || arrayData[i][1]) {
-          return false;
-      }
-
-      if(arrayData[i+1][0] === arrayData[i][0] && arrayData[i+1][1] === arrayData[i][1]){
-        alert('There are room and time conflicts. Please fix them before continuing.')
-        //todo : highlight table rows where the conflicts are
-        return true;
-      }
-    }
-    return false;
-  }
-  $scope.prepareSchedule = (timeOfDay) => {
-    timeOfDay = timeOfDay.split("")[0].toUpperCase() + timeOfDay.slice(1);
-    let tableRowData = $('tbody tr');
-    let arrayToCheck = [];
-    let valuesExist = false;
-    angular.forEach(tableRowData, function(row, key){
-      let timeValue = row.dataset.timeValue;
-      let roomValue = row.dataset.roomValue;
-      if (timeValue === "" || roomValue === ""){
-        //using this to keep the data from checking against empty values for now
-
-      } else {
-        arrayToCheck.push([timeValue, roomValue]);
-        valuesExist = true;
-      }
-    })
-      if(!checkForConflicts(arrayToCheck)){
-        morningSchedule = scheduleTemplate.morning_sessions;
-        afternoonSchedule = scheduleTemplate.afternoon_sessions;
-        // Table saves time slot and room to the sessions object, matching the properties in sessions to the properties in the morning or afternoon schedule
-        angular.forEach($scope.sessions, function(session, key){
-          angular.forEach(morningSchedule.rooms, function(room, key){
-              angular.forEach(room.times, function(timeSlot, key){
-                if (session.Times === timeSlot.time && room.name === session.Room){
-                  timeSlot.session.speaker = session['First Name'] + " " + session['Last Name'];
-                  timeSlot.session.title = session.Title;
-                  //to do
-                  //timeSlot.session.url = ;
-                }
-              });
-          });
-        });
-      if (timeOfDay === "Morning") {
-        updateScheduleToFirebase(timeOfDay, morningSchedule, valuesExist)
-        // After the morning schedule has been built, display the afternoon tab
-        .then(() => Polling.setShowAfternoonTab(true));
-      } else if (timeOfDay === "Afternoon") {
-        updateScheduleToFirebase(timeOfDay, afternoonSchedule, valuesExist);
-        }
-      }
+  $scope.prepareSchedule = () => {
+    let preparedSchedule = [];
+    let conflictCheck = [];
+    if(!$scope.selectedSchedule){
+      alert('Select Morning or Aftxernoon from the sessions dropdown');
+      return;
     }
 
-    const updateScheduleToFirebase = (timeOfDay, schedule, emptyData) => {
-      if(!emptyData) {
-        schedule[timeOfDay] = false;
-      } else {
-        schedule[timeOfDay] = true;
+    angular.forEach($scope.sessions, function(session, index){
+      if (session.Time && session.Room){
+        session.index = index;
+        preparedSchedule.push(session);
+      }
+    });
+
+    Admin.updateScheduleToFirebase($scope.selectedSchedule, preparedSchedule);
+  };
+
+  $scope.displaySchedule = () => {
+    if (!$scope.selectedSchedule || !$scope.realtimeSchedules[$scope.selectedSchedule]) {
+        $scope.clearAllSessions();
+        $scope.sessions = addRankingByVotes($scope.realTimeSessions);
+        return;
+    }
+
+    const sessions = $scope.realTimeSessions;
+    const schedule = $scope.realtimeSchedules[$scope.selectedSchedule];
+    const mappedSessions = Admin.mapSessions(sessions, schedule);
+    $scope.sessions = addRankingByVotes(mappedSessions);
+  };
+
+  firebase.database().ref('/').on('value', (root) => {
+      const { Sessions, Schedules } = root.val();
+
+      $scope.realTimeSessions = Sessions;
+      $scope.realtimeSchedules = Schedules;
+
+      // On initial page load, show all empty sessions and do not load preexisting schedules.
+      if (Sessions && !$scope.selectedSchedule) {
+        $scope.sessions = addRankingByVotes(Sessions);
+      } else if (Schedules && $scope.selectedSchedule) {
+        $scope.displaySchedule();
       }
 
-      return $http.put(`${Constants.firebaseUrl}/Schedules/${timeOfDay}.json`, schedule)
-      .then(() => {
-          // Reset schedule template to build the next schedule
-          buildScheduleTemplate();
-      })
-      .catch(console.error);
-  }
-
-});
+      // checks if $digest is in progress, if first time user visit or on refresh $scope.$apply, else simply let digest run
+      if (!$scope.$$phase) {
+          $scope.$apply();
+      }
+  });
+})//end
