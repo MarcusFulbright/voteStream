@@ -68,7 +68,7 @@
 		</thead>
 
 		<tbody>
-			<tr 
+			<tr
 					data-ng-class="{hide: hideRemoved && s.inSync.removed}"
 			 		data-time-value="{{timeSelect}}"
 			 		data-room-value="{{roomSelect}}"
@@ -87,7 +87,7 @@
 			  	  </select>
 			  	<!-- <select ng-options=""	 -->
 				</td>
-	
+
 				<td>
 				  <select ng-model="s.Room" ng-change="setRoom(s.Room, s)">
 					  <!-- This will allow for an admin to deselect a value -->
@@ -99,7 +99,8 @@
 				<td>{{s.Availability}}</td>
 		</tbody>
 	</table>
-<button type="button" class="btn btn-primary btn-lg btn-block" data-ng-click="prepareSchedule(sessions.Availability)">Save</button>
-<button type="button" class="btn btn-secondary btn-lg btn-block">Reset</button>
+
+	<button type="button" class="btn btn-primary btn-lg btn-block" data-ng-click="prepareSchedule(sessions.Availability)">Save</button>
+
+	<button type="button" class="btn btn-secondary btn-lg btn-block">Reset</button>
 </section>
-					<!-- ng-if="s."> -->
