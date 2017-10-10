@@ -19,19 +19,23 @@ const app = angular.module('BarcampApp', ['ngRoute'])
 		templateUrl : '/templates/admin.html',
 		controller : 'AdminCtrl',
 		resolve: {
-			AuthUser: function (User, $location) {
-				return User.checkAdminUser()
-				.then(isAuth => {
-					if (!isAuth) {
-						$location.path('/login');
-					}
-				})
-				.catch(console.error);
-			},
-			SessionList: function(SessionListing){
-				return SessionListing.getAllSessions().then(session => session);
-			}
+			// AuthUser: function (User, $location) {
+			// 	return User.checkAdminUser()
+			// 	.then(isAuth => {
+			// 		if (!isAuth) {
+			// 			$location.path('/login');
+			// 		}
+			// 	})
+			// 	.catch(console.error);
+			// },
 
+			Rooms: function (RoomsAndTimes) {
+				return RoomsAndTimes.getRooms();
+			},
+
+			Times: function (RoomsAndTimes) {
+				return RoomsAndTimes.getTimes();
+			},
 		}
 	})
 	.when('/fullschedule', {

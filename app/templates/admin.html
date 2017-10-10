@@ -1,29 +1,24 @@
 <div class="header">
-	<button class="btn btn-primary pull-left logout" data-ng-click="logout()">Log Out!</button>
-	<button class="btn btn-primary pull-right"><a href="/#/sessions" class="header-link">Sessions</a></button>
+	<button class="btn btn-primary pull-left logout" ng-click="logout()">Log Out!</button>
+	<button class="btn btn-primary pull-right"><a href="/#!/sessions" class="header-link">Sessions</a></button>
 </div>
 
 <section class="container admin-container">
 	<div class="row">
 		<div class="polling-checkbox">
-			<label> Voting Enabled </label>
-		    <input type="checkbox" ng-model="polling.open" />
+			<!-- <label> Voting Enabled </label>
+		    <input type="checkbox" ng-model="polling.open" /> -->
 
 		    <label class="timeofday">Sessions</label>
-		    <select ng-model="sessions.Availability">
-		    	<!-- <option value="all">All Sessions</option> -->
-		    	<option value="morning" selected>Morning</option>
-		    	<option value="afternoon">Afternoon</option>
+		    <select ng-model="selectedSchedule" ng-change="displaySchedule()" class="form-control">
+		    	<option value="">---</option>
+		    	<option value="Morning">Morning</option>
+		    	<option value="Afternoon">Afternoon</option>
 		    </select>
 
-			<label style="margin-left: 30px;">Hide Removed From Admin View</label>
-			<input type="checkbox" data-ng-model="hideRemoved">
+			<!-- <label style="margin-left: 30px;">Hide Removed From Admin View</label>
+			<input type="checkbox" ng-model="hideRemoved"> -->
 		</div>
-
-		<p>The <em>Hide Removed From Admin View</em> just hides the removed sessions from the admin view. This is to present a cleaner list for better visibility into afternoon session rankings</p>
-
-		<p>Clicking the removed button will hide the session from the voting page. It is for those sessions that are presented in the morning but aslo available in the afternoon. Clicking remove will keep them from showing up in the vote page during the afternoon session</p>
-
 	</div>
 
 	<table class="table">
@@ -68,7 +63,7 @@
 		</thead>
 
 		<tbody>
-			<tr 
+			<tr
 					data-ng-class="{hide: hideRemoved && s.inSync.removed}"
 			 		data-time-value="{{timeSelect}}"
 			 		data-room-value="{{roomSelect}}"
@@ -81,25 +76,27 @@
 		  	<td>
 				  <select ng-model="s.Time" ng-change="setTime(s.Time, s)">
 					  <!-- This will allow for an admin to deselect a value -->
-					  <option value="null" selected>---</option>
+					  <option value="" selected>---</option>
 
 					  <option ng-repeat="time in times" value="{{ time }}">{{ time }}</option>
 			  	  </select>
 			  	<!-- <select ng-options=""	 -->
 				</td>
-	
+
 				<td>
 				  <select ng-model="s.Room" ng-change="setRoom(s.Room, s)">
 					  <!-- This will allow for an admin to deselect a value -->
-					  <option value="null" selected>---</option>
+					  <option value="" selected>---</option>
 
 					  <option ng-repeat="room in rooms" value="{{ room }}">{{ room }}</option>
 				  </select>
 				</td>
 				<td>{{s.Availability}}</td>
+				<td><button class="btn btn-danger" ng-disabled="!s.Room || !s.Time" ng-click="clearSession(s)">X</button></td>
 		</tbody>
 	</table>
-<button type="button" class="btn btn-primary btn-lg btn-block" data-ng-click="prepareSchedule(sessions.Availability)">Save</button>
-<button type="button" class="btn btn-secondary btn-lg btn-block">Reset</button>
+
+	<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="prepareSchedule()">Save</button>
+
+	<button type="button" class="btn btn-secondary btn-lg btn-block" ng-click="clearAllSessions()">Reset</button>
 </section>
-					<!-- ng-if="s."> -->
