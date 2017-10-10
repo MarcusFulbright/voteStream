@@ -15,6 +15,7 @@ app.factory('Admin', function ($http, $q, Constants, SessionListing) {
     .catch(console.error);
   };
 
+  // This will populate a preexisting schedule.
   const mapSessions = (sessions, schedules) => {
       return sessions.map((session) => {
         schedules.find((schedule) => {
@@ -36,9 +37,15 @@ app.factory('Admin', function ($http, $q, Constants, SessionListing) {
     .then(() => {
         //index array has to match index in firebase
         return selectSessions(scheduleIndexes);
+    })
+    .then(() => {
+        alert(`${timeOfDay} schedule has been updated.`)
+    })
+    .catch(() => {
+        alert(`Something went wrong with saving the ${timeOfDay} schedule.`);
     });
   };
 
-  return { selectSessions, mapSessions, updateScheduleToFirebase };
+  return { mapSessions, updateScheduleToFirebase };
 
 });
