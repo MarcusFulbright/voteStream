@@ -1,13 +1,13 @@
 'use strict';
 
-app.controller('SessionListingCtrl', function($scope, $location, Vote, User, isAdminUser, Constants, AuthUser, Polling, SessionList) {
+app.controller('SessionListingCtrl', function($scope, $location, Vote, User, isAdminUser, Constants, AuthUser) {
 
 	// Scoped Variables
 	$scope.maxVotes = Constants.maxVotes;
 	$scope.user = AuthUser;
 	$scope.isAdminUser = isAdminUser;
-	$scope.polling;
-	$scope.sessions = SessionList; // resolve pattern
+	$scope.polling; //real time ref
+	$scope.sessions; //real time ref
 	$scope.tab = undefined; // default, also required to ensure first time variables are set in Polling.realTimePolling
 	$scope.voteArray = []; //default
 	let cookieArray;
@@ -156,8 +156,10 @@ app.controller('SessionListingCtrl', function($scope, $location, Vote, User, isA
 	};
 
 	// This JS will execute on pageload
-	Polling.realTimePolling.on('value', function(polling){
-		$scope.polling = Polling.determineSession(polling.val());
+	firebase.database().ref('/').on('value', function(root){
+		const { PollingState, Sessions} = root.val();
+		$scope.polling = PollingState
+		$scope.sessions = Sessions
 
 		//initial funcitons to run when polling object is originally returned
 		if ($scope.tab === undefined) {
@@ -169,6 +171,7 @@ app.controller('SessionListingCtrl', function($scope, $location, Vote, User, isA
 		if (!$scope.$$phase) {
 			$scope.$apply();
 		}
+
 	});
 
 });

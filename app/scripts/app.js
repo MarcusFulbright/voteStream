@@ -53,12 +53,7 @@ const app = angular.module('BarcampApp', ['ngRoute'])
 					$location.path('/login');
 				});
 			},
-
 			isAdminUser: (User) => User.checkAdminUser().catch(console.error),
-
-			SessionList: function(SessionListing){
-				return SessionListing.getAllSessions().then(session => session);
-			}
 		}
 	}).when('/login', {
 		templateUrl : '/templates/signin.html',
