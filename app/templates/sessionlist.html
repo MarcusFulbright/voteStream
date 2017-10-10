@@ -1,33 +1,56 @@
-<div class="container">
-	<div class="header">
-		<div class="row text-center">
-			<button class="btn btn-primary pull-left logout" ng-click="logout()">Log Out!</button>
+    <div class="row custom-nav">
+        <div class="col-xs-4">
+            <button class="btn btn-primary" data-ng-click="logout()">Log Out!</button>
+        </div>
 
-			<a href="{{scheduleUrl}}" target="_blank" class="header-link">Schedule</a>
-			<span> | Votes Remaining: {{remainingVotes}}</span>
+        <div class="col-xs-4 text-center">
+            <p class="label label-warning votesremaning">{{4 - user.sync.sessions.length}} votes left</p>
+        </div>
 
-			<a class="btn btn-primary pull-right admin-link" ng-if="isAdminUser" href="/#!/admin">Admin</a>
-		</div>
-	</div>
-</div>
-<div class="container sessions" id="myTabs">
-  <!-- Nav tabs -->
-    <ul class="nav nav-tabs" >
-        <li ng-class="{active: tab === 'morning'}"><a ng-click="showTab('morning')">Morning</a></li>
-        <li ng-if="polling.sessions === 'afternoon' || polling.showAfternoonTab" ng-class="{active: tab === 'afternoon'}"><a ng-click="showTab('afternoon')"  >Afternoon</a></li>
-    </ul>
-    <ul class="nav nav-tabs sort-tabs">
+        <div class="col-xs-4">
+            <button class="btn btn-primary pull-right" data-ng-if="!user.admin">
+                 <a href="{{scheduleUrl}}" target="_blank" class="header-link">Schedule</a>
+            </button>
+            
+            <button class="btn btn-primary pull-right" data-ng-if="user.admin">
+                <a href="#/admin" class="admin-link">Admin</a>
+            </button>
+        </div>
+    </div>
+
+
+    <div class="row sub-nav">
+        <div class="col-xs-5 border text-center">
+            <a ng-class="{active: tab === 'morning'}" ng-click="showTab('morning')">Morning</a></li>
+        </div>
+        
+        <div class="col-xs-5 border text-center">
+            <a ng-if="polling.sessions === 'afternoon' || polling.showAfternoonTab" ng-class="{active: tab === 'afternoon'}"ng-click="showTab('afternoon')"  >Afternoon</a></li>
+        </div>
+
+        <div class="col-xs-2 text-center">
+            <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+        </div>
+
+    </div>
+
+<!--     <ul class="nav nav-tabs sort-tabs">
         <li role="presentation" class="active"><a href="" aria-controls="home" role="tab" data-toggle="tab" ng-click="setFilterString('Title')">Title</a></li>
         <li role="presentation"><a href="" aria-controls="home" role="tab" data-toggle="tab" ng-click="setFilterString('Last Name')">Speaker</a></li>
         <li role="presentation"><a href="" aria-controls="home" role="tab" data-toggle="tab" ng-click="setFilterString('Session Category')">Category</a></li>
-    </ul>
-</div>
+    </ul> -->
 
 <div>
   <!--morning voting-->
     <div  class="tab-pane active container sessions" ng-if="tab === 'morning'">
         <!-- ///////////////////////////////////////////////TODO: change has voted to edit mode///////////////// -->
         <!-- ///////////TODO: remove get-remaing-votes, session listing will handle via watcher///////////////// -->
+        <h2>Morning Sessions</h2>
+
+        <!-- Show if polling is opened or closed -->        
+        <div ng-show="polling.open"><p class="lead">Morning Voting Is Open!</p></div>
+        <div ng-show="!polling.open"><p class="lead">Morning Voting Has Closed!</p></div>
+
         <session
             ng-repeat="session in sessions | orderBy:filterBy track by $index"
             ng-model="filterBy"
@@ -48,6 +71,12 @@
     <div  class="tab-pane container sessions" ng-if="tab === 'afternoon'">
         <!-- ///////////////////////////////////////////////TODO: change has voted to edit mode///////////////// -->
         <!-- ///////////TODO: remove get-remaing-votes, session listing will handle via watcher///////////////// -->
+        <h2>Afternoon Sessions</h2>
+        
+        <!-- Show if polling is opened or closed -->        
+        <div ng-show="polling.open"><p class="lead">Afternoon Voting Is Open!</p></div>
+        <div ng-show="!polling.open"><p class="lead">Afternoon Voting Has Closed!</p></div>
+
         <session
             ng-repeat="session in sessions | orderBy:filterBy track by $index"
             ng-model="filterBy"

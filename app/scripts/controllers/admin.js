@@ -7,7 +7,6 @@ app.controller('AdminCtrl', function($scope, $filter, Polling, Constants, Admin,
   $scope.rooms = ["Alpha", "Zulu", "Whiskey", "Tango"];
   $scope.times = ["09:30", "10:30", "11:30", "1:30", "2:30", "3:30" ];
 
-
   const addRankingByVotes = (sessions) =>{
     const SessionListings = $filter('orderBy')(sessions, 'total_votes', true);
 

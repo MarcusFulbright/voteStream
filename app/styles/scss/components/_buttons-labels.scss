@@ -1,0 +1,51 @@
+@import 'base/colors-mixins';
+/* BUTTONS & LABELS */
+
+.logout {
+	margin-left: 20px;
+}
+
+.btn:focus {
+	outline: none;
+}
+
+.btn-primary {
+	background-color: $primary-color;
+	border-color: $primary-color-darker;
+	&:hover,
+	&:disabled,
+	&:focus,
+	&:active {
+		background-color: $primary-color-lighter;
+		border-color: $primary-color;
+	}
+}
+.btn-warning {
+	background-color: $secondary-color;
+	&:hover {
+		background-color: $secondary-color-lighter;
+		border-color: $secondary-color;
+	}
+}
+
+.btn.voted {
+	background-color: $secondary-color;
+	border-color: $secondary-color-darker;
+}
+
+
+.category {
+	.label {
+		margin: 0px 2px;
+		margin-bottom: 2px;
+	}
+}
+
+.label-success {
+	margin-right: 5px;
+	margin-top: 4px;
+}
+
+.label-warning {
+	background-color: $secondary-color;
+}

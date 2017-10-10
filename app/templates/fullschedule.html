@@ -1,6 +1,6 @@
 <div class="header">
-	<button class="btn btn-primary pull-left" ng-click="logout()">Log Out!</button>
-	<button class="btn btn-primary pull-right"><a href="/#/sessions" class="header-link">Sessions</a></button>
+	<button class="btn btn-primary pull-left logout" ng-click="logout()">Log Out!</button>
+	<button class="btn btn-primary pull-right header-link"><a href="/#/sessions">Sessions</a></button>
 </div>
 
 <div class="container schedule sessions" id="myTabs">
@@ -14,6 +14,7 @@
         <li role="presentation"><a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-if="morningRooms.length" ng-click="groupBy('Title')">Title</a></li>
     </ul>
 
+	<!-- Loading Message -->
 	<div class="container" ng-if="!scheduleHasLoaded">
 		<h2 class="text-center come-back-message">Loading...</h2>
 	</div>
@@ -26,7 +27,7 @@
 	<!-- Afternoon schedule -->
 	<section class="scheduleList" ng-hide="!afternoonRooms.length">
 		<h2 class="title">Afternoon Schedule</h2>
-		<div class="tab-content" ng-repeat="session in afternoonGroups">
+		<div class="tab-content" ng-repeat="session in afternoonGroups" >
 			<div class="schedule" id="afternoon">
 				<h3 ng-if="showLabel">-{{session.label}}-</h3>
 		    <div ng-repeat="session in session.sessions">

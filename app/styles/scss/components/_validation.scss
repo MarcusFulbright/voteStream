@@ -1,0 +1,18 @@
+/* VALIDATION */
+
+.ng-invalid {
+	&.ng-dirty {
+		color: #b94a48;
+		border-color: #b94a48;
+		box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+
+		&:focus {
+			border-color: #953b39;
+			box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 6px #d59392;
+		}
+	}
+}
+
+.ngRow:hover {
+	background-color: #ddedf0;
+}

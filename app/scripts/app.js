@@ -28,7 +28,6 @@ const app = angular.module('BarcampApp', ['ngRoute'])
 			// 	})
 			// 	.catch(console.error);
 			// },
-
 			Rooms: function (RoomsAndTimes) {
 				return RoomsAndTimes.getRooms();
 			},

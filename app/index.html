@@ -5,6 +5,7 @@
 	<link rel="icon" href="images/favicon.ico" type="image/x-icon" />
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
 	<link href="/styles/css/barcamp.css" rel="stylesheet" type="text/css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   </head>
@@ -13,22 +14,24 @@
 
 	<header class="container"></header>
 
-	<div class="container">
+	<!-- <div class="container"> -->
 		<div ng-view></div>
-	</div>
+	<!-- </div> -->
 
-	<footer class="container">
+	<footer class="footer">
+		<div class="container">
 		<div class="row">
 			<div class="col-xs-6">
-				<img id="event-logo" class="logo pull-left" src="/images/event-logo.png" alt="BarCamp Logo">
+				<img id="event-logo" class="logo pull-left" src="/images/bcn-logo-2017.png" alt="BarCamp Logo">
 			</div>
 			<div class="col-xs-6">
 				<img id="vendor-spotlight" class="logo pull-right" src="/images/firebase-logo.png" alt="Firebase Logo">
 			</div>
 		</div>
 
+		<!-- TODO: Cleanup -->
 		<div class="row">
-			<div class="col-xs-12 credits">
+			<div class="col-xs-12 credits text-center">
 				<p>
 				Built by:
 				<a href="https://www.linkedin.com/in/daniel-chapdelaine-595a09126/" target="_blank">Daniel Chapdelaine</a>,
@@ -39,6 +42,7 @@
 				<a href="https://www.linkedin.com/in/dominic-serrano" target="_blank">Dominic Serrano</a>
 				</p>
 			</div>
+		</div>
 		</div>
 	</footer>
 
