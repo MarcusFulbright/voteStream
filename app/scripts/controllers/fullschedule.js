@@ -7,32 +7,19 @@ app.controller('FullScheduleCtrl', function ($scope) {
   $scope.morningRooms = [];
   $scope.afternoonRooms = [];
   $scope.showLabel = true;
-  $scope.sessionGroups = [];
-  $scope.morningGroups = [];
-  $scope.afternoonGroups = [];
+  $scope.showName = false;
+  $scope.showTitle = true;
  
-
-    $scope.sortScheduleByTime = (schedule, session) => {
-        let scheduleObj = schedule[session].rooms;
-        let numberOfRooms = Object.keys(scheduleObj).length;
-
-        for (let i = 0; i <= numberOfRooms -1; i++) {
-            for (let j = 0; j < scheduleObj[i].times.length; j++){
-                if(session === "Morning") {
-                  $scope.morningRooms.push(scheduleObj[i].times[j]);
-                  scheduleObj[i].times[j]["room"] = scheduleObj[i].name;
-                }
-                if(session === "Afternoon") {
-                  $scope.afternoonRooms.push(scheduleObj[i].times[j]);
-                  scheduleObj[i].times[j]["room"] = scheduleObj[i].name;
-                }
+    //sorts morning/afternoon sessions for use in groupBy function
+    const sortOn = (attribute) => {
+        $scope.morningRooms.sort(function(a, b) {
+            if (a[attribute] < b[attribute]) {
+                return -1
+            } else {
+                return 1
             }
-        }
-    }
-
-
-    const sortOn = (sessions, attribute) => {
-        sessions.sort(function(a, b) {
+        })
+        $scope.afternoonRooms.sort(function(a, b) {
             if (a[attribute] < b[attribute]) {
                 return -1
             } else {
@@ -41,17 +28,42 @@ app.controller('FullScheduleCtrl', function ($scope) {
         })
     }
 
+    //shows/hides group labels based on attribute
+    //re-sorts if no grouping required
+    const toggleLabels = (attribute) => {
+        if (attribute === 'Last Name') {
+            $scope.showLabel = false
+            $scope.showName = true
+            $scope.showTitle = false
+            sortOn(attribute)
+        } else if (attribute === 'Title') {
+            $scope.showLabel = false
+            $scope.showName = false
+            $scope.showTitle = true
+            sortOn(attribute)
+        } else {
+            $scope.showLabel = true
+            $scope.showName = false
+            $scope.showTitle = true
+        }
+    }
 
-    $scope.groupBy = (period, attribute) => {
-        console.log("period:", period);
-        sortOn(period, attribute)
-        $scope.sessionGroups = [];
-        let groupValue = ''
+
+    $scope.groupBy = (attribute) => {
+        //initial sort of morning/afternoon sessions
+        sortOn(attribute)
+        $scope.morningGroups = [];
+        $scope.afternoonGroups = [];
+        let period1 = $scope.morningRooms;
+        let period2 = $scope.afternoonRooms;
+        let groupValue = '';
         let session;
-        let group = {}
+        let group = {};
 
-        for(let i = 0; i < period.length; i++) {
-            session = period[i];
+        //$scope.morningGroups creation
+        for(let i = 0; i < period1.length; i++) {
+            session = period1[i];
+            //creates a new group object for each new groupValue
             if (session[attribute] != groupValue) {
                 group = {
                     label: session[attribute],
@@ -59,17 +71,28 @@ app.controller('FullScheduleCtrl', function ($scope) {
                 }
 
                 groupValue = group.label;
-                $scope.sessionGroups.push(group)
+                //new array with group objects for use in fullschedule.html
+                $scope.morningGroups.push(group)      
+            }
+            //adds current session to sessions array of current group object
+            group.sessions.push(session)
+        }
+
+        //$scope.afternoonGroups creation
+        for(let i = 0; i < period2.length; i++) {
+            session = period2[i];
+            if (session[attribute] != groupValue) {
+                group = {
+                    label: session[attribute],
+                    sessions: []
+                }
+
+                groupValue = group.label;
+                $scope.afternoonGroups.push(group)      
             }
             group.sessions.push(session)
         }
-        if (attribute === 'Last Name' || attribute === 'Title') {
-            $scope.showLabel = false
-            //re-sorts to remove groupings
-            sortOn(period, attribute)
-        } else {
-            $scope.showLabel = true
-        }
+        toggleLabels(attribute)
     }
 
 
@@ -81,7 +104,8 @@ app.controller('FullScheduleCtrl', function ($scope) {
             $scope.morningRooms = [];
             // $scope.sortScheduleByTime(schedule.val(), "Morning");
             $scope.morningRooms = schedule.val().Morning;
-            $scope.groupBy($scope.morningRooms, 'Time')
+            //initial sorting/grouping based on Time attribute
+            $scope.groupBy('Time')
         }
 
         // If afternoon schedule has been posted to Firebase, populate the schedule
@@ -89,7 +113,7 @@ app.controller('FullScheduleCtrl', function ($scope) {
             $scope.afternoonRooms = [];
             // $scope.sortScheduleByTime(schedule.val(), "Afternoon");
             $scope.afternoonRooms = schedule.val().Afternoon
-            $scope.groupBy($scope.afternoonRooms, 'Time')
+            $scope.groupBy('Time')
         }
 
         if (!schedule.val()) {
@@ -104,3 +128,4 @@ app.controller('FullScheduleCtrl', function ($scope) {
     });
 
 });
+
