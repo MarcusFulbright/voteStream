@@ -34,13 +34,20 @@
 
     </div>
 
-<!--     <ul class="nav nav-tabs sort-tabs">
-        <li role="presentation" class="active"><a href="" aria-controls="home" role="tab" data-toggle="tab" ng-click="setFilterString('Title')">Title</a></li>
-        <li role="presentation"><a href="" aria-controls="home" role="tab" data-toggle="tab" ng-click="setFilterString('Last Name')">Speaker</a></li>
-        <li role="presentation"><a href="" aria-controls="home" role="tab" data-toggle="tab" ng-click="setFilterString('Session Category')">Category</a></li>
-    </ul> -->
-
 <div>
+
+<div class="row sub-nav" ng-if="true">
+    <div class="col-xs-6 border text-center">
+        <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="setFilterString('Last Name')">Speaker</a>
+    </div>
+
+    <div class="col-xs-6 text-center">
+        <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="setFilterString('Title')">Title</a>
+    </div>
+</div>
+
+<!-- end subnav -->
+  
   <!--morning voting-->
     <div  class="tab-pane active container sessions" ng-if="tab === 'morning'">
         <!-- ///////////////////////////////////////////////TODO: change has voted to edit mode///////////////// -->
