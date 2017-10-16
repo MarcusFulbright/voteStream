@@ -1,1 +1,1 @@
-web: node app/index.html
+web: npm install && angular-http-server -p $PORT
