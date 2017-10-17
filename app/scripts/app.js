@@ -58,10 +58,24 @@ const app = angular.module('BarcampApp', ['ngRoute'])
 			},
 			isAdminUser: (User) => User.checkAdminUser().catch(console.error),
 		}
-	}).when('/login', {
+	})
+	.when('/login', {
 		templateUrl : '/templates/signin.html',
 		controller : 'SigninCtrl',
-		allowAnonymousAccess:true
+		resolve: {
+			AllUsers: function(AuthService) {
+				return AuthService.getAllUsers()
+			}
+		}
+	})
+	.when('/login/:badgeId', {
+		templateUrl : '/templates/signin.html',
+		controller : 'SigninCtrl',
+		resolve: {
+			AllUsers: function(AuthService) {
+				return AuthService.getAllUsers()
+			}
+		}
 	})
 	.when('/logout', {
 		redirectTo:'/login',
