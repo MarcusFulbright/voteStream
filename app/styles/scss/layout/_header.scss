@@ -3,16 +3,57 @@
 
 $heading-height: 80px;
 
+.welcome {
+	padding: 0 20px;
+}
+
 .custom-nav {
     background-color: $primary-color;
     height: $heading-height;
     padding: 20px;
 }
 
+.votesremaning {
+	font-size: 12px;
+	font-weight: bold;
+	color: white;
+	letter-spacing: .5px;
+	text-transform: uppercase;
+}
+
 .sub-nav {
 	background-color: $secondary-color;
 	height: 40px;
 	padding: 10px 20px;
+}
+
+
+.sub-nav a {
+	color: #3d3c3c;
+	text-decoration: none;
+}
+
+.sub-nav a:hover {
+	color: #000;
+}
+
+.sub-nav a:active {
+	font-weight: bold;
+}
+
+.sub-sub-nav {
+	background: #207e9d;
+	height: 40px;
+	padding: 10px 20px;
+}
+
+.sub-sub-nav a {
+	color: white;
+	text-decoration: none;
+}
+
+.sub-sub-nav a:active {
+	font-weight: bold;
 }
 
 .border {
@@ -42,4 +83,5 @@ $heading-height: 80px;
 
 .top-buffer { 
 	margin-top: 20px; 
+	padding: 0 15px;
 }

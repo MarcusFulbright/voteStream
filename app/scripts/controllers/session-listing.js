@@ -10,6 +10,7 @@ app.controller('SessionListingCtrl', function($scope, $location, Vote, User, isA
 	$scope.voteArray = []; //default
 	let cookieArray;
 	$scope.filterBy = 'Title'
+	$scope.show_filter = false;
 
 	// Initial page JS - need methods to be defined before this is executed
 	const setVoteArray = () => {
