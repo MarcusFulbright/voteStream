@@ -3,6 +3,14 @@ voteStream
 
 A voting system initially built at HackNashville 4 to collect audience input by which the winner of the hackathon was chosen. This build is more geared towards the needs of [BarCamp Nashville](http://www.barcampnashville.org/) 2013. BarCamp '13 was held November 2, 2013. BarCamp '14 is set for October 18, 2014.
 
+##Uploading Sessions 
+###To upload new sessions from a csv file, go to [CSV to JSON](http://www.convertcsv.com/csv-to-json.htm)  
+ * Copy/pase csv data into text area 
+ * Select "First row is column names" in "Step 2: Choose Input Options" section 
+ * In "Step 5: Generate output" click CSV to JSON
+ * Click "Download Result" 
+ * Upload JSON file to Firebase in "sessions" section
+
 ##Model - [Firebase](https://nashvillebarcamp.firebaseio.com/)
 ###Sessions
 A collection of sessions. Individual objects the details on a Speaker's presentation as well as their availability and vote tabulation.

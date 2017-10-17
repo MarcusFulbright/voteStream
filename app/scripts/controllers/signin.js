@@ -1,11 +1,9 @@
 'use strict';
 
-app.controller('SigninCtrl', function ($scope, $location, AuthService, User) {
+app.controller('SigninCtrl', function ($scope, $location, User, $routeParams, AllUsers) {
 
-	// get all badges
-	AuthService.getAllUsers().then((userList)=>{
-		$scope.badges = userList;
-	});
+
+	$scope.badges = AllUsers
 
 	//takes id from badgeId model in signin.html
 	$scope.login = (id) => {
@@ -33,4 +31,9 @@ app.controller('SigninCtrl', function ($scope, $location, AuthService, User) {
 			$scope.error = 'Invalid badge ID.';
 		};
 	};
+
+	if($routeParams.badgeId) {
+		$scope.login($routeParams.badgeId)
+	}
+
 });
