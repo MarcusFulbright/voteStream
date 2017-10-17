@@ -1,19 +1,18 @@
 'use strict';
 app.controller('AdminCtrl', function($scope, $filter, Polling, Constants, Admin, Rooms, Times) {
 
-  // $scope.rooms = Rooms;
-  // $scope.times = Times; // Will need to select times.Morning or times.Afternoon. Can simplify if need be.
-  // TODO remove after testing is done
-  $scope.rooms = ["Alpha", "Zulu", "Whiskey", "Tango"];
-  $scope.times = ["09:30", "10:30", "11:30", "1:30", "2:30", "3:30" ];
+  $scope.rooms = Rooms;
+  $scope.times = Times; // Will need to select times.Morning or times.Afternoon. Can simplify if need be.
 
   const addRankingByVotes = (sessions) =>{
-    const SessionListings = $filter('orderBy')(sessions, 'total_votes', true);
-
-    return SessionListings.map((session, i) => {
+    const SessionListings = sessions.map((session, i) => {
+        session.index = i;
         session.Rank = i + 1;
+        session.total_votes = (session.total_votes) ? session.total_votes : 0;
         return session;
     });
+
+    return $filter('orderBy')(SessionListings, 'total_votes', true);
   };
 
   //to add rank for the session (ie, 1, 2, 3, must first create a new unsorted array then sort the array by the total votes)
@@ -34,6 +33,14 @@ app.controller('AdminCtrl', function($scope, $filter, Polling, Constants, Admin,
       $scope.realTimeSessions.forEach(each => $scope.clearSession(each));
   };
 
+  $scope.disableSessionSelect = (session) => {
+      if (session.selected === 'Morning' && $scope.selectedSchedule === 'Afternoon') {
+          return true;
+      } else if (session.selected === 'Afternoon' && $scope.selectedSchedule === 'Morning') {
+          return true;
+      }
+  };
+
   $scope.prepareSchedule = () => {
     let preparedSchedule = [];
     let conflictCheck = [];
@@ -42,9 +49,8 @@ app.controller('AdminCtrl', function($scope, $filter, Polling, Constants, Admin,
       return;
     }
 
-    angular.forEach($scope.sessions, function(session, index){
+    angular.forEach($scope.sessions, function(session){
       if (session.Time && session.Room){
-        session.index = index;
         preparedSchedule.push(session);
       }
     });
@@ -53,11 +59,12 @@ app.controller('AdminCtrl', function($scope, $filter, Polling, Constants, Admin,
   };
 
   $scope.displaySchedule = () => {
-    if (!$scope.selectedSchedule || !$scope.realtimeSchedules[$scope.selectedSchedule]) {
+    if (!$scope.selectedSchedule || !$scope.realtimeSchedules || !$scope.realtimeSchedules[$scope.selectedSchedule]) {
         $scope.clearAllSessions();
         $scope.sessions = addRankingByVotes($scope.realTimeSessions);
         return;
     }
+    $scope.clearAllSessions();
 
     const sessions = $scope.realTimeSessions;
     const schedule = $scope.realtimeSchedules[$scope.selectedSchedule];
@@ -65,6 +72,7 @@ app.controller('AdminCtrl', function($scope, $filter, Polling, Constants, Admin,
     $scope.sessions = addRankingByVotes(mappedSessions);
   };
 
+  // JS below will run on pageload
   firebase.database().ref('/').on('value', (root) => {
       const { Sessions, Schedules } = root.val();
 
