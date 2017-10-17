@@ -1,18 +1,40 @@
-<div class="header">
-	<button class="btn btn-primary pull-left logout" ng-click="logout()">Log Out!</button>
-	<button class="btn btn-primary pull-right header-link"><a href="/#/sessions">Sessions</a></button>
+<!-- nav -->
+<div class="row custom-nav">
+	<div class="col-xs-6">
+		<button class="btn btn-primary" data-ng-click="logout()">Log Out!</button>
+	</div>
+
+	<div class="col-xs-6">
+		<button class="btn btn-primary pull-right">
+			 <a href="/#!/sessions" class="header-link">Sessions</a>
+		</button>
+	</div>
 </div>
+<!-- end nav -->
+
+
+<!-- sub nav for filter -->
+<div class="row sub-nav">
+	<div class="col-xs-3 border text-center">
+		<a href="" aria-controls="home" role="tab" data-toggle="tab" ng-if="morningRooms.length"  ng-click="groupBy('Time')">Time</a>
+	</div>
+	
+	<div class="col-xs-3 border text-center">
+		<a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-if="morningRooms.length" ng-click="groupBy('Room')">Room</a>
+	</div>
+
+	<div class="col-xs-3 border text-center">
+		<a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-if="morningRooms.length" ng-click="groupBy('Last Name')">Speaker</a>
+	</div>
+
+	<div class="col-xs-3 text-center">
+		<a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-if="morningRooms.length" ng-click="groupBy('Title')">Title</a>
+	</div>
+</div>
+<!-- end subnav -->
+
 
 <div class="container schedule sessions" id="myTabs">
-    <ul class="nav nav-tabs" role="tablist" ng-hide="!morningRooms.length">
-        <li role="presentation" class="active"><a href="" aria-controls="home" role="tab" data-toggle="tab" ng-if="morningRooms.length"  ng-click="groupBy('Time')">Time</a></li>
-
-        <li role="presentation"><a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-if="morningRooms.length" ng-click="groupBy('Room')">Room</a></li>
-      
-        <li role="presentation"><a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-if="morningRooms.length" ng-click="groupBy('Last Name')">Speaker</a></li>
-         
-        <li role="presentation"><a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-if="morningRooms.length" ng-click="groupBy('Title')">Title</a></li>
-    </ul>
 
 	<!-- Loading Message -->
 	<div class="container" ng-if="!scheduleHasLoaded">
@@ -29,16 +51,21 @@
 		<h2 class="title">Afternoon Schedule</h2>
 		<div class="tab-content" ng-repeat="session in afternoonGroups" >
 			<div class="schedule" id="afternoon">
-				<h3 ng-if="showLabel">-{{session.label}}-</h3>
-		    <div ng-repeat="session in session.sessions">
-			   <h4 ng-if="showTitle">{{session.Title}}</h4>
-			   <h4 ng-if="showName">{{session['Last Name']}}, {{session['First Name']}}</h4>
-			   <h5 ng-if="!showTitle">{{session.Title}}</h5>
-			   <h5 ng-if="!showName">{{session['Last Name']}}, {{session['First Name']}}</h5>
-			   <p>{{session.Room}} | {{session.Time}}</p>
-			   <p>{{session.Body}}</p>
-			   <hr>
-		    </div>
+				
+				<h3 ng-if="showLabel">{{session.label}}</h3>
+			
+			<div ng-repeat="session in session.sessions">
+				
+				<h4 ng-if="showTitle">{{session.Title}}</h4>
+				<h4 ng-if="showName">{{session['Last Name']}}, {{session['First Name']}}</h4>
+				
+				<h5 ng-if="!showTitle">{{session.Title}}</h5>
+				<h5 ng-if="!showName">{{session['Last Name']}}, {{session['First Name']}}</h5>
+				
+				<p>{{session.Room}} | {{session.Time}}</p>
+				<p>{{session.Body}}</p>
+				<hr>
+			</div>
 			</div>
 		</div>
 	</section>
@@ -48,16 +75,18 @@
 		<h2 class="title">Morning Schedule</h2>
 		<div class="tab-content" ng-repeat="session in morningGroups">
 			<div class="schedule" id="morning">
-				<h3 ng-if="showLabel">-{{session.label}}-</h3>
-		    <div ng-repeat="session in session.sessions">
+				
+				<h3 ng-if="showLabel">{{session.label}}</h3>
+			
+			<div ng-repeat="session in session.sessions">
 			   <h4 ng-if="showTitle">{{session.Title}}</h4>
 			   <h4 ng-if="showName">{{session['Last Name']}}, {{session['First Name']}}</h4>
 			   <h5 ng-if="!showTitle">{{session.Title}}</h5>
 			   <h5 ng-if="!showName">{{session['Last Name']}}, {{session['First Name']}}</h5>
 			   <p>{{session.Room}} | {{session.Time}}</p>
 			   <p>{{session.Body}}</p>
-			   <hr>
-		    </div>
+				<hr>
+			</div>
 			</div>
 		</div>
 	</section>
