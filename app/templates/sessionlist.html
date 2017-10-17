@@ -4,12 +4,12 @@
         </div>
 
         <div class="col-xs-4 text-center">
-            <p class="label label-warning votesremaning">{{4 - user.sync.sessions.length}} votes left</p>
+            <p class="votesremaning">{{remainingVotes}} votes left</p>
         </div>
 
         <div class="col-xs-4">
             <button class="btn btn-primary pull-right" data-ng-if="!user.admin">
-                 <a href="{{scheduleUrl}}" target="_blank" class="header-link">Schedule</a>
+                 <a href="/#!/fullschedule" class="header-link">Schedule</a>
             </button>
             
             <button class="btn btn-primary pull-right" data-ng-if="user.admin">
@@ -29,23 +29,21 @@
         </div>
 
         <div class="col-xs-2 text-center">
-            <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-filter" aria-hidden="true" ng-click = "show_filter = !show_filter"></span>
         </div>
 
     </div>
 
-<div>
+    <div class="row sub-sub-nav" ng-show = "show_filter">
+        <div class="col-xs-6 border text-center">
+            <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="setFilterString('Last Name')">Speaker</a>
+        </div>
 
-<div class="row sub-nav" ng-if="true">
-    <div class="col-xs-6 border text-center">
-        <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="setFilterString('Last Name')">Speaker</a>
+        <div class="col-xs-6 text-center">
+            <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="setFilterString('Title')">Title</a>
+        </div>
     </div>
-
-    <div class="col-xs-6 text-center">
-        <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="setFilterString('Title')">Title</a>
-    </div>
-</div>
-
+    
 <!-- end subnav -->
   
   <!--morning voting-->

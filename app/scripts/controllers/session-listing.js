@@ -10,6 +10,7 @@ app.controller('SessionListingCtrl', function($scope, $location, Vote, User, isA
 	$scope.voteArray = []; //default
 	let cookieArray;
 	$scope.filterBy = 'Title'
+	$scope.show_filter = false;
 
 	// Initial page JS - need methods to be defined before this is executed
 	const setVoteArray = () => {
@@ -36,6 +37,7 @@ app.controller('SessionListingCtrl', function($scope, $location, Vote, User, isA
 
 	$scope.$watch( 'voteArray.length', () => {
 		$scope.remainingVotes = $scope.maxVotes - $scope.voteArray.length;
+		console.log('$scope.remainingVotes', $scope.remainingVotes); 
 	})
 
 	$scope.showTab = tab => {

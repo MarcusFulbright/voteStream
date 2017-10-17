@@ -9,10 +9,47 @@ $heading-height: 80px;
     padding: 20px;
 }
 
+.votesremaning {
+	font-size: 12px;
+	font-weight: bold;
+	color: white;
+	letter-spacing: .5px;
+	text-transform: uppercase;
+}
+
 .sub-nav {
 	background-color: $secondary-color;
 	height: 40px;
 	padding: 10px 20px;
+}
+
+
+.sub-nav a {
+	color: #3d3c3c;
+	text-decoration: none;
+}
+
+.sub-nav a:hover {
+	color: #000;
+}
+
+.sub-nav a:active {
+	font-weight: bold;
+}
+
+.sub-sub-nav {
+	background: #207e9d;
+	height: 40px;
+	padding: 10px 20px;
+}
+
+.sub-sub-nav a {
+	color: white;
+	text-decoration: none;
+}
+
+.sub-sub-nav a:active {
+	font-weight: bold;
 }
 
 .border {
