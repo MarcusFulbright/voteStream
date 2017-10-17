@@ -1,1 +1,1 @@
-web: npm install && angular-http-server -p $PORT
+web: npm install && cd app/ && ./../node_modules/angular-http-server/angular-http-server.js -p $PORT
