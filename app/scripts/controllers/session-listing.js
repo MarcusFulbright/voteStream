@@ -37,7 +37,6 @@ app.controller('SessionListingCtrl', function($scope, $location, Vote, User, isA
 
 	$scope.$watch( 'voteArray.length', () => {
 		$scope.remainingVotes = $scope.maxVotes - $scope.voteArray.length;
-		console.log('$scope.remainingVotes', $scope.remainingVotes); 
 	})
 
 	$scope.showTab = tab => {

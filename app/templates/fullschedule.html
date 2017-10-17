@@ -5,8 +5,8 @@
 	</div>
 
 	<div class="col-xs-6">
-		<button class="btn btn-primary pull-right" data-ng-if="!user.admin">
-			 <a href="/#/sessions" class="header-link">Sessions</a>
+		<button class="btn btn-primary pull-right">
+			 <a href="/#!/sessions" class="header-link">Sessions</a>
 		</button>
 	</div>
 </div>
@@ -85,7 +85,7 @@
 			   <h5 ng-if="!showName">{{session['Last Name']}}, {{session['First Name']}}</h5>
 			   <p>{{session.Room}} | {{session.Time}}</p>
 			   <p>{{session.Body}}</p>
-			   <hr>
+				<hr>
 			</div>
 			</div>
 		</div>

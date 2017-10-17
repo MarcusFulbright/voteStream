@@ -4,7 +4,7 @@ html {
   min-height: 100%; }
 
 body {
-  margin-bottom: 150px; }
+  margin-bottom: 250px; }
 
 h1, h2 {
   font-family: "Oswald", sans-serif;
@@ -24,6 +24,9 @@ blockquote {
   margin: 0; }
 
 /* HEADER */
+.welcome {
+  padding: 0 20px; }
+
 .custom-nav {
   background-color: #932318;
   height: 80px;
@@ -67,7 +70,8 @@ blockquote {
   border-right: 1px solid #999; }
 
 .top-buffer {
-  margin-top: 20px; }
+  margin-top: 20px;
+  padding: 0 15px; }
 
 /* NAVIGATION */
 .nav-tabs {
@@ -99,8 +103,7 @@ blockquote {
   position: absolute;
   bottom: 0;
   width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 150px; }
+  /* Set the fixed height of the footer here */ }
 
 /* ANIMATION */
 .animate-switch.ng-animate {
@@ -304,12 +307,12 @@ input[type="color"]:focus,
   margin-bottom: 50px; }
 
 .schedule h3 {
-  color: #feb336;
+  color: #207e9d;
   font-family: "Oswald", sans-serif;
   font-size: 2em;
   margin: 15px 0;
   padding: 4px 0;
-  border-bottom: 5px solid #feb336; }
+  border-bottom: 5px solid #207e9d; }
 
 @media (max-width: 480px) {
   .header select {

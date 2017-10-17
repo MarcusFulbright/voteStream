@@ -3,6 +3,10 @@
 
 $heading-height: 80px;
 
+.welcome {
+	padding: 0 20px;
+}
+
 .custom-nav {
     background-color: $primary-color;
     height: $heading-height;
@@ -79,4 +83,5 @@ $heading-height: 80px;
 
 .top-buffer { 
 	margin-top: 20px; 
+	padding: 0 15px;
 }
