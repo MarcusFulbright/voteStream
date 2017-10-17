@@ -73,26 +73,36 @@
 				<td>{{s.total_votes}}</td>
 				<td>{{s.Title}}</td>
 				<td>{{s['First Name']}} {{s['Last Name']}}</td>
-		  	<td>
-				  <select ng-model="s.Time" ng-change="setTime(s.Time, s)">
+		  		<td>
+				  <select ng-model="s.Time" ng-change="setTime(s.Time, s)" ng-disabled="disableSessionSelect(s)">
 					  <!-- This will allow for an admin to deselect a value -->
 					  <option value="" selected>---</option>
 
-					  <option ng-repeat="time in times" value="{{ time }}">{{ time }}</option>
+					  <optgroup label="Morning">
+						  <option ng-repeat="time in times.morning" value="{{ time }}">{{ time }}</option>
+					  </optgroup>
+
+					  <optgroup label="Afternoon">
+						  <option ng-repeat="time in times.afternoon" value="{{ time }}">{{ time }}</option>
+					  </optgroup>
 			  	  </select>
-			  	<!-- <select ng-options=""	 -->
 				</td>
 
 				<td>
-				  <select ng-model="s.Room" ng-change="setRoom(s.Room, s)">
+				  <select ng-model="s.Room" ng-change="setRoom(s.Room, s)" ng-disabled="disableSessionSelect(s)">
 					  <!-- This will allow for an admin to deselect a value -->
 					  <option value="" selected>---</option>
 
 					  <option ng-repeat="room in rooms" value="{{ room }}">{{ room }}</option>
 				  </select>
 				</td>
-				<td>{{s.Availability}}</td>
-				<td><button class="btn btn-danger" ng-disabled="!s.Room || !s.Time" ng-click="clearSession(s)">X</button></td>
+				<td>
+					<span ng-hide="disableSessionSelect(s)">{{s.Availability}}</span>
+
+					<span ng-show="disableSessionSelect(s)" class="text-danger">SELECTED FOR {{ s.selected.toUpperCase() }}</span>
+				</td>
+
+				<td><button class="btn btn-warning" ng-disabled="!s.Room && !s.Time" ng-click="clearSession(s)">Clear</button></td>
 		</tbody>
 	</table>
 
