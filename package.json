@@ -7,9 +7,10 @@
     "test": "test"
   },
   "scripts": {
-    "grunt-dev": "node_modules/grunt/bin/grunt dev --verbose",
+    "grunt-dev": "./node_modules/grunt/bin/grunt dev --verbose",
     "gulp-watch": "./node_modules/gulp/bin/gulp.js",
-    "grunt": "node_modules/grunt/bin/grunt"
+    "grunt": "./node_modules/grunt/bin/grunt",
+    "gen-badges": "node ./createBadgeJSON.js"
   },
   "dependencies": {
     "angular": "^1.6.4",

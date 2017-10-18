@@ -3,17 +3,17 @@
             <button class="btn btn-primary" data-ng-click="logout()">Log Out!</button>
         </div>
 
-        <div class="col-xs-4 text-center">
-            <p class="votesremaning">{{remainingVotes}} votes left</p>
+        <div class="col-xs-4 text-center" ng-if="polling.open && polling.sessions === tab">
+            <p class="votesremaning">{{remainingVotes}} vote(s) left</p>
         </div>
 
-        <div class="col-xs-4">
+        <div class="col-xs-4 pull-right">
             <button class="btn btn-primary pull-right" data-ng-if="!user.admin">
                  <a href="/#!/fullschedule" class="header-link">Schedule</a>
             </button>
-            
-            <button class="btn btn-primary pull-right" data-ng-if="user.admin">
-                <a href="#/admin" class="admin-link">Admin</a>
+
+            <button class="btn btn-primary pull-right" ng-if="isAdminUser">
+                <a href="/#!/admin" class="admin-link">Admin</a>
             </button>
         </div>
     </div>
@@ -23,7 +23,7 @@
         <div class="col-xs-5 border text-center">
             <a ng-class="{active: tab === 'morning'}" ng-click="showTab('morning')">Morning</a></li>
         </div>
-        
+
         <div class="col-xs-5 border text-center">
             <a ng-if="polling.sessions === 'afternoon' || polling.showAfternoonTab" ng-class="{active: tab === 'afternoon'}"ng-click="showTab('afternoon')"  >Afternoon</a></li>
         </div>
@@ -43,16 +43,16 @@
             <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="setFilterString('Title')">Title</a>
         </div>
     </div>
-    
+
 <!-- end subnav -->
-  
+
   <!--morning voting-->
     <div  class="tab-pane active container sessions" ng-if="tab === 'morning'">
         <!-- ///////////////////////////////////////////////TODO: change has voted to edit mode///////////////// -->
         <!-- ///////////TODO: remove get-remaing-votes, session listing will handle via watcher///////////////// -->
         <h2>Morning Sessions</h2>
 
-        <!-- Show if polling is opened or closed -->        
+        <!-- Show if polling is opened or closed -->
         <div ng-show="polling.open"><p class="lead">Morning Voting Is Open!</p></div>
         <div ng-show="!polling.open"><p class="lead">Morning Voting Has Closed!</p></div>
 
@@ -77,8 +77,8 @@
         <!-- ///////////////////////////////////////////////TODO: change has voted to edit mode///////////////// -->
         <!-- ///////////TODO: remove get-remaing-votes, session listing will handle via watcher///////////////// -->
         <h2>Afternoon Sessions</h2>
-        
-        <!-- Show if polling is opened or closed -->        
+
+        <!-- Show if polling is opened or closed -->
         <div ng-show="polling.open"><p class="lead">Afternoon Voting Is Open!</p></div>
         <div ng-show="!polling.open"><p class="lead">Afternoon Voting Has Closed!</p></div>
 
@@ -111,7 +111,7 @@
 		<button
             class="btn btn-success col-sm-2"
             data-toggle="modal"
-            data-target="#titles-modal"
+            data-target="#error-modal"
             type="button"
             ng-click="voteSubmit()"
             ng-if="editMode"
@@ -142,12 +142,16 @@
 <!-- Modal warns user that new votes will not be saved if user cancels -->
 <div class="modal fade bs-example-modal-sm" id="cancel-modal" tabindex="-1">
     <div class="modal-dialog modal-sm" >
-        <div class="modal-content">
-            <h3 style="">New selections will not be saved upon cancelling</h3>
-            <h3 style="">Do you wish to continue?</h3>
-            <div>
-                <button type="button" class="btn btn-default" ng-click="resetVote()" data-dismiss="modal">Yes, cancel my selections</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <div class="modal-content text-center mb-2">
+                <h3>New selections will not be saved upon cancelling.</h3>
+                <h3>Do you wish to continue?</h3>
+
+                <div>
+                    <button type="button" class="btn btn-danger" ng-click="resetVote()" data-dismiss="modal">Yes, cancel my selections</button>
+                    <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                </div>
+
+                <br>
             </div>
         </div>
     </div>
