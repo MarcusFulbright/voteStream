@@ -3,16 +3,25 @@ voteStream
 
 A voting system initially built at HackNashville 4 to collect audience input by which the winner of the hackathon was chosen. This build is more geared towards the needs of [BarCamp Nashville](http://www.barcampnashville.org/) 2013. BarCamp '13 was held November 2, 2013. BarCamp '14 is set for October 18, 2014.
 
-##Uploading Sessions 
-###To upload new sessions from a csv file, go to [CSV to JSON](http://www.convertcsv.com/csv-to-json.htm)  
- * Copy/pase csv data into text area 
- * Select "First row is column names" in "Step 2: Choose Input Options" section 
+## Uploading Sessions
+#### To upload new sessions from a csv file, go to [CSV to JSON](http://www.convertcsv.com/csv-to-json.htm)  
+ * Copy/pase csv data into text area
+ * Select "First row is column names" in "Step 2: Choose Input Options" section
  * In "Step 5: Generate output" click CSV to JSON
- * Click "Download Result" 
- * Upload JSON file to Firebase in "sessions" section
+ * Click "Download Result"
+ * Import JSON file to the `Sessions` collection in Firebase. **Be extremely careful, importing new JSON will delete the existing JSON at that location.**
 
-##Model - [Firebase](https://nashvillebarcamp.firebaseio.com/)
-###Sessions
+
+ ## Creating and Uploading Badges
+ * Follow the above instructions if you are needing to generate JSON from a CSV file.
+ * Create a file named `voteStream/badges.json` and paste your JSON array of badge numbers into it. **This file must be named `badges.json` and must be in the root of the project. This file will be `.gitignored`**
+ * Run the command `npm run gen-badges`
+ * This will output a JSON array of badge objects that are compatible with the voteStream app into `voteStream/finalBadges.json`.
+ * Import this JSON to the `Users` collection in Firebase. **Be extremely careful, importing new JSON will delete the existing JSON at that location.**
+
+
+## Model - [Firebase](https://nashvillebarcamp.firebaseio.com/)
+### Sessions
 A collection of sessions. Individual objects the details on a Speaker's presentation as well as their availability and vote tabulation.
  * Availability (Morning || Afternoon || Both)
  * Body - Description of the session
@@ -29,7 +38,7 @@ A collection of sessions. Individual objects the details on a Speaker's presenta
  * id - Firebase id
  * total_votes - Number of votes tabulated for the session
 
-###Categories: 0, 1, or 2 for each session; 15 total
+### Categories: 0, 1, or 2 for each session; 15 total
  * all
  * code
  * content
@@ -46,20 +55,20 @@ A collection of sessions. Individual objects the details on a Speaker's presenta
  * ux/ia
  * other
 
-##Users
+## Users
 A user is represented in firebase as a unique code to enter for voting purposes, an array of their votes, and the validity of the account. Currently there is no way within the app to disable a user or identify them by name. That association does not exist in the model or in the unique code assignment process.
 
-##Views
-###Login
+## Views
+### Login
 The first view a user is greeted with. It contains logos for BarCamp and Firebase (in return we received free tier 1 service for BarCamp '13). The user is prompted to enter their unique voting code.
 
-###Voting
+### Voting
 The default view upon successful authentication (valid user code). Here a user has the ability to view a listing of the sessions. They can vote on and revoke their votes for sessions. They also have the ability to filter by category.
 
-###Results
+### Results
 This view reveals a table listing of sessions in a realtime link to Firebase. The columns are sortable and should probably default to show the highest scoring sessions by vote count in descending order. It also contains the toggle to enable/disable voting which *must* be put behind something more secure. Seriously, this isn't secure or even obfuscated well.
 
-###Schedule
+### Schedule
 The plan currently is to include the schedule as updated on the [BarCamp website](http://www.barcampnashville.org/bcn14/sessions) in the application via an iframe. This page is updated manually once votes are tallied and is set up to reveal the time slots and room assignments. It also has the ability to show the user a list of their custom sessions composed of favorites they've marked ahead of time.
 
 ## Run the Voting App

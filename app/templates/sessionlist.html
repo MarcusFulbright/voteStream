@@ -4,7 +4,7 @@
         </div>
 
         <div class="col-xs-4 text-center" ng-if="polling.open && polling.sessions === tab">
-            <p class="votesremaning">{{remainingVotes}} votes left</p>
+            <p class="votesremaning">{{remainingVotes}} vote(s) left</p>
         </div>
 
         <div class="col-xs-4 pull-right">
@@ -111,7 +111,7 @@
 		<button
             class="btn btn-success col-sm-2"
             data-toggle="modal"
-            data-target="#titles-modal"
+            data-target="#error-modal"
             type="button"
             ng-click="voteSubmit()"
             ng-if="editMode"
@@ -142,12 +142,16 @@
 <!-- Modal warns user that new votes will not be saved if user cancels -->
 <div class="modal fade bs-example-modal-sm" id="cancel-modal" tabindex="-1">
     <div class="modal-dialog modal-sm" >
-        <div class="modal-content">
-            <h3 style="">New selections will not be saved upon cancelling</h3>
-            <h3 style="">Do you wish to continue?</h3>
-            <div>
-                <button type="button" class="btn btn-default" ng-click="resetVote()" data-dismiss="modal">Yes, cancel my selections</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <div class="modal-content text-center mb-2">
+                <h3>New selections will not be saved upon cancelling.</h3>
+                <h3>Do you wish to continue?</h3>
+
+                <div>
+                    <button type="button" class="btn btn-danger" ng-click="resetVote()" data-dismiss="modal">Yes, cancel my selections</button>
+                    <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                </div>
+
+                <br>
             </div>
         </div>
     </div>

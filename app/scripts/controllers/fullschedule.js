@@ -9,7 +9,7 @@ app.controller('FullScheduleCtrl', function ($scope) {
   $scope.showLabel = true;
   $scope.showName = false;
   $scope.showTitle = true;
- 
+
     //sorts morning/afternoon sessions for use in groupBy function
     const sortOn = (attribute) => {
         $scope.morningRooms.sort(function(a, b) {
@@ -72,7 +72,7 @@ app.controller('FullScheduleCtrl', function ($scope) {
 
                 groupValue = group.label;
                 //new array with group objects for use in fullschedule.html
-                $scope.morningGroups.push(group)      
+                $scope.morningGroups.push(group)
             }
             //adds current session to sessions array of current group object
             group.sessions.push(session)
@@ -88,13 +88,12 @@ app.controller('FullScheduleCtrl', function ($scope) {
                 }
 
                 groupValue = group.label;
-                $scope.afternoonGroups.push(group)      
+                $scope.afternoonGroups.push(group)
             }
             group.sessions.push(session)
         }
         toggleLabels(attribute)
-    }
-
+    };
 
     // This JS will execute on page load
     firebase.database().ref('/Schedules').on('value', function(schedule){
@@ -128,4 +127,3 @@ app.controller('FullScheduleCtrl', function ($scope) {
     });
 
 });
-
