@@ -18,7 +18,7 @@
 	<div class="col-xs-3 border text-center">
 		<a href="" aria-controls="home" role="tab" data-toggle="tab" ng-if="morningRooms.length"  ng-click="groupBy('Time')">Time</a>
 	</div>
-	
+
 	<div class="col-xs-3 border text-center">
 		<a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-if="morningRooms.length" ng-click="groupBy('Room')">Room</a>
 	</div>
@@ -51,19 +51,28 @@
 		<h2 class="title">Afternoon Schedule</h2>
 		<div class="tab-content" ng-repeat="session in afternoonGroups" >
 			<div class="schedule" id="afternoon">
-				
+
 				<h3 ng-if="showLabel">{{session.label}}</h3>
-			
+
 			<div ng-repeat="session in session.sessions">
-				
+
 				<h4 ng-if="showTitle">{{session.Title}}</h4>
 				<h4 ng-if="showName">{{session['Last Name']}}, {{session['First Name']}}</h4>
-				
+
 				<h5 ng-if="!showTitle">{{session.Title}}</h5>
 				<h5 ng-if="!showName">{{session['Last Name']}}, {{session['First Name']}}</h5>
-				
+
 				<p>{{session.Room}} | {{session.Time}}</p>
-				<p>{{session.Body}}</p>
+
+				<!-- Session Description -->
+				<div class="row">
+					<div class="sessionDescription col-xs-12 col-sm-12 col-md-12" ng-click="showText = !showText">
+						<p ng-class="{ collapsed: !showText }">{{$ctrl.session.Body}}</p>
+						<div class="toggle-text" ng-hide="showText"><em>show more</em></div>
+						<div class="toggle-text" ng-show="showText"><em>show less</em></div>
+					</div>
+				</div> <!--end row -->
+
 				<hr>
 			</div>
 			</div>
@@ -75,20 +84,28 @@
 		<h2 class="title">Morning Schedule</h2>
 		<div class="tab-content" ng-repeat="session in morningGroups">
 			<div class="schedule" id="morning">
-				
+
 				<h3 ng-if="showLabel">{{session.label}}</h3>
-			
+
 			<div ng-repeat="session in session.sessions">
 			   <h4 ng-if="showTitle">{{session.Title}}</h4>
 			   <h4 ng-if="showName">{{session['Last Name']}}, {{session['First Name']}}</h4>
 			   <h5 ng-if="!showTitle">{{session.Title}}</h5>
 			   <h5 ng-if="!showName">{{session['Last Name']}}, {{session['First Name']}}</h5>
 			   <p>{{session.Room}} | {{session.Time}}</p>
-			   <p>{{session.Body}}</p>
+
+			   <!-- Session Description -->
+			   <div class="row">
+				   <div class="sessionDescription col-xs-12 col-sm-12 col-md-12" ng-click="showText = !showText">
+					   <p ng-class="{ collapsed: !showText }">{{session.Body}}</p>
+					   <div class="toggle-text" ng-hide="showText"><em>show more</em></div>
+					   <div class="toggle-text" ng-show="showText"><em>show less</em></div>
+				   </div>
+			   </div> <!--end row -->
+
 				<hr>
 			</div>
 			</div>
 		</div>
 	</section>
 </div>
-

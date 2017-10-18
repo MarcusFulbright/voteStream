@@ -19,15 +19,16 @@ const app = angular.module('BarcampApp', ['ngRoute'])
 		templateUrl : '/templates/admin.html',
 		controller : 'AdminCtrl',
 		resolve: {
-			// AuthUser: function (User, $location) {
-			// 	return User.checkAdminUser()
-			// 	.then(isAuth => {
-			// 		if (!isAuth) {
-			// 			$location.path('/login');
-			// 		}
-			// 	})
-			// 	.catch(console.error);
-			// },
+			AuthUser: function (User, $location) {
+				return User.checkAdminUser()
+				.then(isAuth => {
+					if (!isAuth) {
+						$location.path('/login');
+					}
+				})
+				.catch(console.error);
+			},
+
 			Rooms: function (RoomsAndTimes) {
 				return RoomsAndTimes.getRooms();
 			},
@@ -56,6 +57,7 @@ const app = angular.module('BarcampApp', ['ngRoute'])
 					$location.path('/login');
 				});
 			},
+			
 			isAdminUser: (User) => User.checkAdminUser().catch(console.error),
 		}
 	})
