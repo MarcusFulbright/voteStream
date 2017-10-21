@@ -78,7 +78,7 @@ app.controller('SessionListingCtrl', function($scope, $location, Vote, User, isA
 
 	$scope.setCookie = () => {
 			const d = new Date();
-			d.setTime(d.getTime() + (30*60*1000));
+			d.setTime(d.getTime() + (3.5*60*60*1000));
 			const expires = `expires=${d.toUTCString()}`;
 			window.document.cookie = `${cookieArray}=${$scope.voteArray};${expires};`
 	};

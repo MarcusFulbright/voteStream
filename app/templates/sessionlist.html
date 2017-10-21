@@ -53,8 +53,8 @@
         <h2>Morning Sessions</h2>
 
         <!-- Show if polling is opened or closed -->
-        <div ng-show="polling.open"><p class="lead">Morning Voting Is Open!</p></div>
-        <div ng-show="!polling.open"><p class="lead">Morning Voting Has Closed!</p></div>
+        <div ng-show="isVotingOpen('morning')"><p class="lead">Morning Voting Is Open!</p></div>
+        <div ng-show="!isVotingOpen('morning')"><p class="lead">Morning Voting Has Closed!</p></div>
 
         <session
             ng-repeat="session in sessions | orderBy:filterBy track by $index"
@@ -79,8 +79,8 @@
         <h2>Afternoon Sessions</h2>
 
         <!-- Show if polling is opened or closed -->
-        <div ng-show="polling.open"><p class="lead">Afternoon Voting Is Open!</p></div>
-        <div ng-show="!polling.open"><p class="lead">Afternoon Voting Has Closed!</p></div>
+        <div ng-show="isVotingOpen('afternoon')"><p class="lead">Afternoon Voting Is Open!</p></div>
+        <div ng-show="!isVotingOpen('afternoon')"><p class="lead">Afternoon Voting Has Closed!</p></div>
 
         <session
             ng-repeat="session in sessions | orderBy:filterBy track by $index"
